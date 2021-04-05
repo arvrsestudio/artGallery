@@ -1,4 +1,5 @@
 node_modules
 package-lock.json
-abis/*
-abis
+src/abis/*
+src/abis
+truffle-config.js
