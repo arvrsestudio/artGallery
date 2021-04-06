@@ -74,7 +74,7 @@ contract NftFactory is ERC721_FORKED {
   }
 
   /**
-   * this function assignes the URI to automaticlay add the id number at the end of the URI
+   * this function assignes the URI to automatically add the id number at the end of the URI
    */
   function assignDataToToken(uint256 id, string memory uri) public {
     require(msg.sender == _creator);
