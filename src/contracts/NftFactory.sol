@@ -198,21 +198,6 @@ contract NftFactory is ERC721_FORKED {
     tokenIdToMetadata[currentTokenCount] = url;
   }
 
-  /**
-   * this function allows you to change the address that is going to receive the fee amount  
-   */
-  function ChangeFeeAccount(address newFeeAccount) public returns (bool) {
-    feeAccount = newFeeAccount;
-    return true;
-  }
-
-  /**
-   * this function allows you to change the Fee percent  
-   */
-  function ChangeFeePercent(uint256 newFeePercent) public returns (bool) {
-    feePercent = newFeePercent;
-    return true;
-  }
 
   /**
    * this function allows you burn your NFT  
