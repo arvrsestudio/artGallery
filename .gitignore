@@ -3,3 +3,4 @@ package-lock.json
 src/abis/*
 src/abis
 truffle-config.js
+src/contracts/artifacts
