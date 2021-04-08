@@ -7,6 +7,7 @@ contract NftFactory is ERC721_FORKED {
   string internal _name;
   string internal _symbol;
   string internal _description;
+  string internal _uri;
   // Total tokens starts at 0 because each new token must be minted and the
   // _mint() call adds 1 to totalTokens
   uint256 totalTokens = 0;
@@ -41,6 +42,7 @@ contract NftFactory is ERC721_FORKED {
     string name;
     string symbol;
     string description;
+    string uri;
     address creator;
   }
 
@@ -51,6 +53,7 @@ contract NftFactory is ERC721_FORKED {
   function Registry(
     string memory name,
     string memory symbol,
+    string memory uri,
     string memory description,
     address caller
   ) public {
@@ -60,9 +63,10 @@ contract NftFactory is ERC721_FORKED {
     _symbol = symbol;
     _description = description;
     _creator = caller;
+    _uri = uri;
     totalTokens = 0;
 
-    registries[symbol] = REGISTRY(name, symbol, description, msg.sender);
+    registries[symbol] = REGISTRY(name, symbol, uri, description, msg.sender);
   }
 
   /**
