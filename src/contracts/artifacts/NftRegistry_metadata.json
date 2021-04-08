@@ -11,11 +11,6 @@
 						"internalType": "address",
 						"name": "_feeAccount",
 						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_feePercent",
-						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -119,6 +114,12 @@
 					},
 					{
 						"indexed": false,
+						"internalType": "string",
+						"name": "uri",
+						"type": "string"
+					},
+					{
+						"indexed": false,
 						"internalType": "address",
 						"name": "caller",
 						"type": "address"
@@ -175,6 +176,11 @@
 					{
 						"internalType": "string",
 						"name": "symbol",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "uri",
 						"type": "string"
 					},
 					{
@@ -261,19 +267,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "balance1",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -339,6 +332,40 @@
 					{
 						"internalType": "string",
 						"name": "symbol",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "uri",
+						"type": "string"
+					}
+				],
+				"name": "createRegistry",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "uri",
 						"type": "string"
 					},
 					{
@@ -537,6 +564,11 @@
 					{
 						"internalType": "string",
 						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "uri",
 						"type": "string"
 					},
 					{
@@ -824,7 +856,7 @@
 				"Mint(string)": {
 					"notice": "this function allows to mint more of your NFT  "
 				},
-				"Registry(string,string,string,address)": {
+				"Registry(string,string,string,string,address)": {
 					"notice": "a registry function that iis been called by the NFT registry smart contract"
 				},
 				"approveAll(address)": {
@@ -834,7 +866,7 @@
 					"notice": "this function allows to approve more than one token id at once"
 				},
 				"assignDataToToken(uint256,string)": {
-					"notice": "this function assignes the URI to automaticlay add the id number at the end of the URI"
+					"notice": "this function assignes the URI to automatically add the id number at the end of the URI"
 				},
 				"burn(string,uint256)": {
 					"notice": "this function allows you burn your NFT  "
@@ -896,14 +928,6 @@
 			"urls": [
 				"bzz-raw://526dc85e1f9b9b45830e202568d267d93dde7a4fcccf4ad7798dadcd92304d3c",
 				"dweb:/ipfs/QmaoXMB972J3cSDLtBq3xBo4jLwqD2uzXTwujtSPqkYVhR"
-			]
-		},
-		"@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-			"keccak256": "0xca0c2396dbeb3503b51abf4248ebf77a1461edad513c01529df51850a012bee3",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://991b44ff44e0496e8554a90f4c0512c28faed45104d40430019f3c67ea67740e",
-				"dweb:/ipfs/Qmc3nRapVbcctELoZS5qe17zLkFB3bETBfwzCTMF1CSuGE"
 			]
 		},
 		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
@@ -986,6 +1010,14 @@
 				"dweb:/ipfs/QmUMzkyH3ytJX5gVPizQruNLhkKmuJb3nFqBDad4LPdg5U"
 			]
 		},
+		"src/contracts/ERC20_FORKED.sol": {
+			"keccak256": "0x0b08de69349aeebccbecccab6fa2e42cd4c7bb5d6b919da043b5b32c448a16c0",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://1990d366c941b6063ad82de67f20ca10918feda9fe88f34da4337a302fd124f4",
+				"dweb:/ipfs/QmPHuDmaYBSrG3pNTixbLMTLMGqFVD6xbMRCQpTEXwEJh8"
+			]
+		},
 		"src/contracts/ERC721_FORKED.sol": {
 			"keccak256": "0x06d8b7f49c64ab48ba288f0fb23b03ee5504578e63317c76230f91e49190cdb8",
 			"license": "MIT",
@@ -995,19 +1027,19 @@
 			]
 		},
 		"src/contracts/NftFactory.sol": {
-			"keccak256": "0xbb0f0ff18075b7841f1eefd6196694de967ee173b25427fa3cff81ede398947c",
+			"keccak256": "0x762807620834e0c76fc7e01c57d94dc0e6f8facf6096d83776bbeb476486aeb8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e433ecbef6cf599b5437d7805538e6b55cdf7be81aeeb4478e00ff752ec02db7",
-				"dweb:/ipfs/QmS4Xer28TQ8ohLG1mock5v2L38xcaKYi6LYeXQzaF9PTE"
+				"bzz-raw://9c5cc41f4bb71ce91663e40cf60b7db76a17a51ea390f356c2c6c0b2ffdd345b",
+				"dweb:/ipfs/QmVAdm5CnmFGvFUnUgJ893stdsx4E7pxjbwhA8ZKkF32Nk"
 			]
 		},
 		"src/contracts/NftRegistry.sol": {
-			"keccak256": "0xf89eef7b5d3845be271e6c3313fa663905d008bab3a23d7004ec9c7ca4873021",
+			"keccak256": "0x5b9cc8298368f52821d0f98f4255c0295848b40483983f81847761b34e1212f5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5928c4866fc042b1b5b2bcfff9a5383328ae150aa9423ac953ed47c3a7e9dcc6",
-				"dweb:/ipfs/QmSUaXZqMZbCQRiJ3bLC7dknEcMunUMLKXyAmMtucWnqAc"
+				"bzz-raw://df382b76bd8cd8ef2322633cc20787dd577808349a21bc04405807a123867ae4",
+				"dweb:/ipfs/QmPN66KNYRJRrPzpuB1VkCT3REQCeqXbuFmWZ7KbCgz9dD"
 			]
 		}
 	},
