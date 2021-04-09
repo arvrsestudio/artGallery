@@ -22,6 +22,9 @@ contract NftRegistry is NftFactory {
   ERC20 cifiTokenContract = ERC20(0x135a6636C8d1D5099C6a6A1D8D0762C4c9Ed9f09);
   uint256 constant FEE = 10;
   string constant DEFAULT_DESCRIPTION = "";
+  uint256 balaceOfUser = cifiTokenContract.balanceOf(msg.sender);
+  uint8 cifiDecimals = cifiTokenContract.decimals();
+  uint256 feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
   event RegistryCreated(
     string name,
@@ -31,28 +34,28 @@ contract NftRegistry is NftFactory {
     address caller
   );
 
-
-  
-  function createRegistry(string memory name,
-    string memory symbol,
-    string memory uri,
-    string memory description)public returns (bool){
-        return _createRegistry(name, symbol, uri, description);
-    }
-    
-    function createRegistry(string memory name,
-    string memory symbol,
-    string memory uri)public returns (bool){
-        return _createRegistry(name, symbol, uri, DEFAULT_DESCRIPTION);
-    }
-    
-    
-    
-  function _createRegistry(
+  function createRegistry(
     string memory name,
     string memory symbol,
     string memory uri,
     string memory description
+  ) public returns (bool) {
+    return _createRegistry(name, symbol, description, uri);
+  }
+
+  function createRegistry(
+    string memory name,
+    string memory symbol,
+    string memory uri
+  ) public returns (bool) {
+    return _createRegistry(name, symbol, DEFAULT_DESCRIPTION, uri);
+  }
+
+  function _createRegistry(
+    string memory name,
+    string memory symbol,
+    string memory description,
+    string memory uri
   ) internal returns (bool) {
     require(msg.sender != address(0), "Invalid address");
     require(bytes(name).length != 0, "name can't be empty");
@@ -61,20 +64,18 @@ contract NftRegistry is NftFactory {
       keccak256(bytes(registries[symbol].symbol)) != keccak256(bytes(symbol)),
       "symbol is already taken"
     );
-    uint256 balaceOfUser = cifiTokenContract.balanceOf(msg.sender);
-    uint8 cifiDecimals = cifiTokenContract.decimals();
-    uint256 feeAmount = FEE.mul(10**cifiDecimals).div(100);
+
     require(
       balaceOfUser >= feeAmount,
       "insufficient  Balance, unable to pay the registration Fee"
     );
 
     cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
-    Registry(name, symbol, uri,description, msg.sender);
+    Registry(name, symbol, description, uri, msg.sender);
+    emit RegistryCreated(name, symbol, description, uri, msg.sender);
 
     return true;
   }
-
 
   function getRegistryAddress(string memory symbol)
     public
