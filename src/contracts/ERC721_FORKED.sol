@@ -340,7 +340,6 @@ contract ERC721_FORKED is Context, ERC165, IERC721, IERC721Metadata, IERC721Enum
 
         _tokenOwners.set(tokenId, to);
 
-        emit Transfer(address(0), to, tokenId);
     }
 
     /**

@@ -33,6 +33,7 @@ contract NftFactory is ERC721_FORKED {
   mapping(string => REGISTRY) public registries;
 
   event MetadataAssigned(address indexed _owner, uint256 _tokenId, string _url);
+  event Mint(string url);
 
   /**
    * its a struct to save every registry been made and store it to fetch any registry by chosing the symbol only
@@ -53,8 +54,8 @@ contract NftFactory is ERC721_FORKED {
   function Registry(
     string memory name,
     string memory symbol,
-    string memory uri,
     string memory description,
+    string memory uri,
     address caller
   ) public {
     symbol = _upperCase(symbol);
@@ -62,11 +63,11 @@ contract NftFactory is ERC721_FORKED {
     _name = name;
     _symbol = symbol;
     _description = description;
-    _creator = caller;
     _uri = uri;
+    _creator = caller;
     totalTokens = 0;
 
-    registries[symbol] = REGISTRY(name, symbol, uri, description, msg.sender);
+    registries[symbol] = REGISTRY(_name, _symbol, _description, _uri , msg.sender);
   }
 
   /**
@@ -187,7 +188,7 @@ contract NftFactory is ERC721_FORKED {
   /**
    * this function allows to mint more of your NFT  
    */
-  function Mint(string memory url) public {
+  function mint(string memory url) public {
     require(msg.sender == _creator);
     uint256 currentTokenCount = totalSupply();
     // The index of the newest token is at the # totalTokens.
@@ -200,6 +201,7 @@ contract NftFactory is ERC721_FORKED {
     ownedTokens[msg.sender] = ids;
     // _mint() call adds 1 to total tokens, but we want the token at index - 1
     tokenIdToMetadata[currentTokenCount] = url;
+    emit Mint(url);
   }
 
 
