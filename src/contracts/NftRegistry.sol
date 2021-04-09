@@ -16,14 +16,14 @@ contract NftRegistry is NftFactory {
    * deployed Cifi_Token and add it below
    * the address below is just a dummy one that we need to change once we deploy the Cifi_Token Contract to the
    * binance main net and take the address of the contract and add it below
-   * but for testing purposes just deploy the cifiToken to Ganache and take the address and use it.
+   * but for testing purposes just deploy the scifiToken to Ganache and take the address and use it.
    */
 
-  ERC20 cifiTokenContract = ERC20(0x135a6636C8d1D5099C6a6A1D8D0762C4c9Ed9f09);
-  uint256 constant FEE = 10;
-  uint256 balaceOfUser = cifiTokenContract.balanceOf(msg.sender);
-  uint8 cifiDecimals = cifiTokenContract.decimals();
-  uint256 feeAmount = FEE.mul(10**cifiDecimals).div(100);
+   ERC20 cifiTokenContract = ERC20(0x135a6636C8d1D5099C6a6A1D8D0762C4c9Ed9f09);
+   uint256 constant FEE = 10;
+   uint256 balaceOfUser = cifiTokenContract.balanceOf(msg.sender);
+   uint8 cifiDecimals = cifiTokenContract.decimals();
+   uint256 feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
   event RegistryCreated(
     string name,
@@ -47,16 +47,21 @@ contract NftRegistry is NftFactory {
       "symbol is already taken"
     );
 
-    require(
-      balaceOfUser >= feeAmount,
-      "insufficient  Balance, unable to pay the registration Fee"
-    );
+     require(
+       balaceOfUser >= feeAmount,
+       "insufficient  Balance, unable to pay the registration Fee"
+     );
 
-    cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
+      cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
     Registry(name, symbol, description, uri, msg.sender);
     emit RegistryCreated(name, symbol, description, uri, msg.sender);
 
     return true;
+  }
+
+  function getFeeAmount() public pure returns (uint256) {
+      uint256 feeAmount;
+    return feeAmount = FEE.mul(10**cifiDecimals).div(100);
   }
 
   function getRegistryAddress(string memory symbol)
