@@ -19,7 +19,7 @@ contract NftRegistry is NftFactory {
    * but for testing purposes just deploy the scifiToken to Ganache and take the address and use it.
    */
 
-   ERC20 cifiTokenContract = ERC20(0x135a6636C8d1D5099C6a6A1D8D0762C4c9Ed9f09);
+   ERC20 cifiTokenContract = ERC20(0xFdA68667A0edeAbe08f362669600806285973E3c);
    uint256 constant FEE = 10;
    uint256 balaceOfUser = cifiTokenContract.balanceOf(msg.sender);
    uint8 cifiDecimals = cifiTokenContract.decimals();
@@ -59,8 +59,7 @@ contract NftRegistry is NftFactory {
     return true;
   }
 
-  function getFeeAmount() public pure returns (uint256) {
-      uint256 feeAmount;
+  function getFeeAmount() public returns (uint256) {
     return feeAmount = FEE.mul(10**cifiDecimals).div(100);
   }
 
