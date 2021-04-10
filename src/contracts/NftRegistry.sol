@@ -53,7 +53,7 @@ contract NftRegistry is NftFactory,AccessControl {
     require(bytes(name).length != 0, "name can't be empty");
     require(bytes(symbol).length != 0, "symbol can't be empty");
 
-       cifiTokenContract.transferFrom(0x4AB3a9Fc7abC71197FaD169FfEe41210b21F6CAa, feeAccount, feeAmount);
+       cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
     Registry(name, symbol, description, uri, msg.sender);
     emit RegistryCreated(name, symbol, description, uri, msg.sender);
 
