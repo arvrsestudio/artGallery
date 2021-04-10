@@ -2,13 +2,17 @@
 pragma solidity >=0.4.22 <0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./NftFactory.sol";
 
-contract NftRegistry is NftFactory {
+contract NftRegistry is NftFactory,AccessControl {
   using SafeMath for uint256;
-
+  address feeAccount = 0x0000000000000000000000000000000000000000;
+  
   constructor(address _feeAccount) public {
     feeAccount = _feeAccount;
+    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    createRegistry("CifiPowa", "CIFI","testDescription", "testURI");
   }
 
   /*
@@ -19,11 +23,10 @@ contract NftRegistry is NftFactory {
    * but for testing purposes just deploy the scifiToken to Ganache and take the address and use it.
    */
 
-   ERC20 cifiTokenContract = ERC20(0xFdA68667A0edeAbe08f362669600806285973E3c);
-   uint256 constant FEE = 10;
-   uint256 balaceOfUser = cifiTokenContract.balanceOf(msg.sender);
-   uint8 cifiDecimals = cifiTokenContract.decimals();
-   uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
+//   ERC20 cifiTokenContract = ERC20(0xCb880DC85b329158216681BdfF750c8Eb8C06055);
+//   uint256 constant FEE = 10;
+//   uint8 cifiDecimals = cifiTokenContract.decimals();
+//   uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
   event RegistryCreated(
     string name,
@@ -47,19 +50,14 @@ contract NftRegistry is NftFactory {
       "symbol is already taken"
     );
 
-     require(
-       balaceOfUser >= feeAmount,
-       "insufficient  Balance, unable to pay the registration Fee"
-     );
-
-      cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
+    //   cifiTokenContract.transferFrom(0x4AB3a9Fc7abC71197FaD169FfEe41210b21F6CAa, feeAccount, feeAmount);
     Registry(name, symbol, description, uri, msg.sender);
     emit RegistryCreated(name, symbol, description, uri, msg.sender);
 
     return true;
   }
 
-  function getRegistryAddress(string memory symbol)
+   function getRegistryAddress(string memory symbol)
     public
     view
     returns (address)
@@ -70,4 +68,13 @@ contract NftRegistry is NftFactory {
     );
     return registries[symbol].creator;
   }
+
+  /**
+   * this function allows you to change the address that is going to receive the fee amount  
+   */
+   function ChangeFeeAccount(address newFeeAccount) public returns (bool) {
+     require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not an admin");
+    feeAccount = newFeeAccount;
+    return true;
+  }  
 }
