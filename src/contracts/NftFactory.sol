@@ -14,17 +14,8 @@ contract NftFactory is ERC721_FORKED {
 
   address internal _creator;
 
-  address internal feeAccount; // the account that receives exchange
-  uint256 internal feePercent; // the fee percentage
-
-  // Mapping from token ID to owner
-  mapping(uint256 => address) tokenOwner;
-
   // Mapping from owner to list of owned token IDs
-  mapping(address => uint256[]) public ownedTokens;
-
-  // Mapping from token ID to index of the owner tokens list
-  mapping(uint256 => uint256) ownedTokensIndex;
+  mapping(address => uint256[]) ownedTokens;
 
   // Metadata is a URL that points to a json dictionary
   mapping(uint256 => string) tokenIdToMetadata;
@@ -57,7 +48,7 @@ contract NftFactory is ERC721_FORKED {
     string memory description,
     string memory uri,
     address caller
-  ) public {
+  ) internal {
     symbol = _upperCase(symbol);
 
     _name = name;
@@ -68,14 +59,6 @@ contract NftFactory is ERC721_FORKED {
     totalTokens = 0;
 
     registries[symbol] = REGISTRY(_name, _symbol, _description, _uri , msg.sender);
-  }
-
-  /**
-   * a modifier to make sure that the address exists
-   */
-  modifier isOwnedToken(uint256 _tokenId) {
-    require(ownerOf(_tokenId) != address(0));
-    _;
   }
 
   /**
@@ -102,13 +85,6 @@ contract NftFactory is ERC721_FORKED {
     returns (string memory)
   {
     return tokenIdToMetadata[_tokenId];
-  }
-
-  /**
-   * this function helps with queries to Fetch the owner address of the token by givine token id
-   */
-  function getTokenOwner(uint256 id) public view returns (address) {
-    return tokenOwner[id];
   }
 
   /**
@@ -172,7 +148,6 @@ contract NftFactory is ERC721_FORKED {
     require(from != address(0), "invalid address");
     require(to != address(0), "invalid address");
     _safeTransfer(from, to, tokenId, _data);
-    tokenOwner[tokenId] = to;
     uint256[] memory fromIds = ownedTokens[from];
     uint256[] memory newFromIds = new uint256[](fromIds.length - 1);
     uint256[] storage toIds = ownedTokens[to];
@@ -193,8 +168,19 @@ contract NftFactory is ERC721_FORKED {
     uint256 currentTokenCount = totalSupply();
     // The index of the newest token is at the # totalTokens.
     _mint(msg.sender, currentTokenCount);
-    // assign id to owner
-    tokenOwner[currentTokenCount] = msg.sender;
+    // assign address to array of owned tokens aned you can qury what ids the address owns
+    uint256[] storage ids = ownedTokens[msg.sender];
+    ids.push(currentTokenCount);
+    ownedTokens[msg.sender] = ids;
+    // _mint() call adds 1 to total tokens, but we want the token at index - 1
+    tokenIdToMetadata[currentTokenCount] = url;
+    emit Mint(url);
+  }
+  
+  function mintCifiPowa(string memory url) public {
+    uint256 currentTokenCount = totalSupply();
+    // The index of the newest token is at the # totalTokens.
+    _mint(msg.sender, currentTokenCount);
     // assign address to array of owned tokens aned you can qury what ids the address owns
     uint256[] storage ids = ownedTokens[msg.sender];
     ids.push(currentTokenCount);
@@ -211,7 +197,6 @@ contract NftFactory is ERC721_FORKED {
   function burn(string memory symbol, uint256 _id) public returns (bool) {
     require(registries[symbol].creator == msg.sender);
     _burn(_id);
-    delete tokenOwner[_id];
     return true;
   }
 

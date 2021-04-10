@@ -118,14 +118,14 @@ contract ERC721_FORKED is Context, ERC165, IERC721, IERC721Metadata, IERC721Enum
     /**
      * @dev See {IERC721Metadata-name}.
      */
-    function name() public view virtual override returns (string memory) {
+    function name() external view virtual override returns (string memory) {
         return _name;
     }
 
     /**
      * @dev See {IERC721Metadata-symbol}.
      */
-    function symbol() public view virtual override returns (string memory) {
+    function symbol() external view virtual override returns (string memory) {
         return _symbol;
     }
 
@@ -334,7 +334,6 @@ contract ERC721_FORKED is Context, ERC165, IERC721, IERC721Metadata, IERC721Enum
         require(to != address(0), "ERC721: mint to the zero address");
         require(!_exists(tokenId), "ERC721: token already minted");
 
-        _beforeTokenTransfer(address(0), to, tokenId);
 
         _holderTokens[to].add(tokenId);
 
@@ -355,7 +354,6 @@ contract ERC721_FORKED is Context, ERC165, IERC721, IERC721Metadata, IERC721Enum
     function _burn(uint256 tokenId) internal virtual {
         address owner = ERC721_FORKED.ownerOf(tokenId); // internal owner
 
-        _beforeTokenTransfer(owner, address(0), tokenId);
 
         // Clear approvals
         _approve(address(0), tokenId);
@@ -387,7 +385,6 @@ contract ERC721_FORKED is Context, ERC165, IERC721, IERC721Metadata, IERC721Enum
         require(ERC721_FORKED.ownerOf(tokenId) == from, "ERC721: transfer of token that is not own"); // internal owner
         require(to != address(0), "ERC721: transfer to the zero address");
 
-        _beforeTokenTransfer(from, to, tokenId);
 
         // Clear approvals from the previous owner
         _approve(address(0), tokenId);
@@ -473,5 +470,4 @@ contract ERC721_FORKED is Context, ERC165, IERC721, IERC721Metadata, IERC721Enum
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
-    function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal virtual { }
 }
