@@ -23,10 +23,10 @@ contract NftRegistry is NftFactory,AccessControl {
    * but for testing purposes just deploy the scifiToken to Ganache and take the address and use it.
    */
 
-//   ERC20 cifiTokenContract = ERC20(0xCb880DC85b329158216681BdfF750c8Eb8C06055);
-//   uint256 constant FEE = 10;
-//   uint8 cifiDecimals = cifiTokenContract.decimals();
-//   uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
+   ERC20 cifiTokenContract = ERC20(0xCb880DC85b329158216681BdfF750c8Eb8C06055);
+   uint256 constant FEE = 10;
+   uint8 cifiDecimals = cifiTokenContract.decimals();
+   uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
   event RegistryCreated(
     string name,
@@ -50,7 +50,7 @@ contract NftRegistry is NftFactory,AccessControl {
       "symbol is already taken"
     );
 
-    //   cifiTokenContract.transferFrom(0x4AB3a9Fc7abC71197FaD169FfEe41210b21F6CAa, feeAccount, feeAmount);
+       cifiTokenContract.transferFrom(0x4AB3a9Fc7abC71197FaD169FfEe41210b21F6CAa, feeAccount, feeAmount);
     Registry(name, symbol, description, uri, msg.sender);
     emit RegistryCreated(name, symbol, description, uri, msg.sender);
 
