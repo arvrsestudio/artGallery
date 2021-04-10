@@ -11,7 +11,7 @@ contract NftRegistry is NftFactory,AccessControl {
   constructor(address _feeAccount) public {
     feeAccount = _feeAccount;
     _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    registries["CIFI"] = REGISTRY("CifiPowa", "CIFI", "testDescription", "testUri" , msg.sender);
+    registries["POWA"] = REGISTRY("Cifipowa", "POWA", "initial Cifipowa", "we can just add url of metadata here" , msg.sender);
   }
 
   /*
