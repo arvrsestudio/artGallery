@@ -35,20 +35,24 @@ contract NftRegistry is NftFactory,AccessControl {
     string uri,
     address caller
   );
+  
+  modifier uniqueSymbol(string memory symbol){
+      require(
+      keccak256(bytes(registries[symbol].symbol)) != keccak256(bytes(symbol)),
+      "symbol is already taken"
+    );
+    _;
+  }
 
   function createRegistry(
     string memory name,
     string memory symbol,
     string memory description,
     string memory uri
-  ) public returns (bool) {
+  ) public uniqueSymbol (symbol)returns (bool) {
     require(msg.sender != address(0), "Invalid address");
     require(bytes(name).length != 0, "name can't be empty");
     require(bytes(symbol).length != 0, "symbol can't be empty");
-    require(
-      keccak256(bytes(registries[symbol].symbol)) != keccak256(bytes(symbol)),
-      "symbol is already taken"
-    );
 
        cifiTokenContract.transferFrom(0x4AB3a9Fc7abC71197FaD169FfEe41210b21F6CAa, feeAccount, feeAmount);
     Registry(name, symbol, description, uri, msg.sender);
