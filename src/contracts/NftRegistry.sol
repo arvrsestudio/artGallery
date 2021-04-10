@@ -8,11 +8,10 @@ import "./NftFactory.sol";
 contract NftRegistry is NftFactory,AccessControl {
   using SafeMath for uint256;
   address feeAccount = 0x0000000000000000000000000000000000000000;
-  
   constructor(address _feeAccount) public {
     feeAccount = _feeAccount;
     _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    createRegistry("CifiPowa", "CIFI","testDescription", "testURI");
+    registries["CIFI"] = REGISTRY("CifiPowa", "CIFI", "testDescription", "testUri" , msg.sender);
   }
 
   /*
@@ -23,7 +22,7 @@ contract NftRegistry is NftFactory,AccessControl {
    * but for testing purposes just deploy the scifiToken to Ganache and take the address and use it.
    */
 
-   ERC20 cifiTokenContract = ERC20(0xCb880DC85b329158216681BdfF750c8Eb8C06055);
+   ERC20 cifiTokenContract = ERC20(0xb806d1a6C0AF8f0679E59104603aac4A417A790c);
    uint256 constant FEE = 10;
    uint8 cifiDecimals = cifiTokenContract.decimals();
    uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
