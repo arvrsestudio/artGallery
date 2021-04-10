@@ -23,7 +23,7 @@ contract NftRegistry is NftFactory {
    uint256 constant FEE = 10;
    uint256 balaceOfUser = cifiTokenContract.balanceOf(msg.sender);
    uint8 cifiDecimals = cifiTokenContract.decimals();
-   uint256 feeAmount = FEE.mul(10**cifiDecimals).div(100);
+   uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
   event RegistryCreated(
     string name,
@@ -57,10 +57,6 @@ contract NftRegistry is NftFactory {
     emit RegistryCreated(name, symbol, description, uri, msg.sender);
 
     return true;
-  }
-
-  function getFeeAmount() public returns (uint256) {
-    return feeAmount = FEE.mul(10**cifiDecimals).div(100);
   }
 
   function getRegistryAddress(string memory symbol)
