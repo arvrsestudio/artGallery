@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.4;
+pragma experimental ABIEncoderV2;
 
 import "./ERC721_FORKED.sol";
 
@@ -106,11 +107,11 @@ contract NftFactory is ERC721_FORKED {
   {
     require(_owner != address(0), "invalid owner");
     string[] memory _registries =  ownedRegistries[_owner];
-    REGISTRY[] _ownedRegistries=[];
     uint counter=0;
     uint length = _registries.length;
+    REGISTRY[] memory _ownedRegistries = new REGISTRY[](length);
     while(counter < length){
-      _ownedRegistries.push(registries[_registries[counter]]);
+      _ownedRegistries[counter] = (registries[_registries[counter]]);
       counter++;
     }
     return _ownedRegistries;
