@@ -17,6 +17,9 @@ contract NftFactory is ERC721_FORKED {
   // Mapping from owner to list of owned token IDs
   mapping(address => uint256[]) ownedTokens;
 
+  // Mapping from owner to list of owned Registry symbols
+  mapping(address => string[]) ownedRegistries;
+
   // Metadata is a URL that points to a json dictionary
   mapping(uint256 => string) tokenIdToMetadata;
 
@@ -59,6 +62,7 @@ contract NftFactory is ERC721_FORKED {
     totalTokens = 0;
 
     registries[symbol] = REGISTRY(_name, _symbol, _description, _uri , msg.sender);
+    ownedRegistries[msg.sender].push(_symbol);
   }
 
   /**
@@ -94,6 +98,24 @@ contract NftFactory is ERC721_FORKED {
     require(_owner != address(0), "invalid owner");
     return ownedTokens[_owner];
   }
+
+  /**
+   * this function helps with queries to Fetch all the registries that the address owns by givine address
+  */
+  function registriesOf(address _owner) public view returns (REGISTRY[] memory)
+  {
+    require(_owner != address(0), "invalid owner");
+    string[] memory _registries =  ownedRegistries[_owner];
+    REGISTRY[] _ownedRegistries=[];
+    uint counter=0;
+    uint length = _registries.length;
+    while(counter < length){
+      _ownedRegistries.push(registries[_registries[counter]]);
+      counter++;
+    }
+    return _ownedRegistries;
+  }
+
 
   /**
    * this function allows to approve more than one token id at once
