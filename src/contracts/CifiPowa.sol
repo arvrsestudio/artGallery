@@ -30,7 +30,7 @@ contract CifiPowa is ERC721,AccessControl {
    * a registry function that iis been called by the NFT registry smart contract
    */
 
-   constructor (){
+   constructor () ERC721("Cifipowa","POWA"){
     Nftname ="Cifipowa";
     Nftsymbol ="POWA";
     Nftdescription ="initial Cifipowa";

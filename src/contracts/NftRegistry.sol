@@ -17,7 +17,7 @@ contract NftRegistry {
   address private _owner;
   constructor(address _feeAccount) public {
     feeAccount = _feeAccount;
-    address _owner = msg.sender;
+    _owner = msg.sender;
   }
 
   /*
@@ -28,10 +28,10 @@ contract NftRegistry {
    * but for testing purposes just deploy the scifiToken to Ganache and take the address and use it.
    */
 
-   ERC20 cifiTokenContract = ERC20(0xb806d1a6C0AF8f0679E59104603aac4A417A790c);
+  //  ERC20 cifiTokenContract = ERC20(0xb806d1a6C0AF8f0679E59104603aac4A417A790c);
    uint256 constant FEE = 10;
-   uint8 cifiDecimals = cifiTokenContract.decimals();
-   uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
+  //  uint8 cifiDecimals = cifiTokenContract.decimals();
+  //  uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
   
   event RegistryCreated(
     string name,
@@ -52,7 +52,7 @@ contract NftRegistry {
     require(bytes(name).length != 0, "name can't be empty");
     require(bytes(symbol).length != 0, "symbol can't be empty");
     uniqueSymbol(symbol);
-    cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
+    // cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
     NftFactory registry =
       new NftFactory(name, symbol, description, uri, msg.sender);
       

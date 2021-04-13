@@ -34,7 +34,7 @@ constructor (string memory _name,
     string memory _symbol,
     string memory _description,
     string memory _uri,
-    address _caller){
+    address _caller) ERC721(_name,_symbol){
     _symbol = _upperCase(_symbol);
 
     Nftname = _name;
@@ -43,6 +43,7 @@ constructor (string memory _name,
     Nfturi = _uri;
     Nftcreator = _caller;
     totalTokens = 0;
+    
     }
 
   /**
