@@ -9,6 +9,8 @@ contract NftRegistry {
   mapping (string => address) public symbolToRegeistryAddress;
   // mapping to save the Uri to Registry Address
   mapping (string => address) public uriToRegeistryAddress;
+  //mapping to save all the registry addresses of an owner
+  mapping(address=> address[]) public userToRegistries;
 
   using SafeMath for uint256;
   address lastaddress;
@@ -46,7 +48,8 @@ contract NftRegistry {
     string memory name,
     string memory symbol,
     string memory description,
-    string memory uri
+    string memory uri,
+    bool isPrivate
   ) public  returns (address) {
     require(msg.sender != address(0), "Invalid address");
     require(bytes(name).length != 0, "name can't be empty");
@@ -54,7 +57,7 @@ contract NftRegistry {
     uniqueSymbol(symbol);
     // cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
     NftFactory registry =
-      new NftFactory(name, symbol, description, uri, msg.sender);
+      new NftFactory(name, symbol, description, uri, msg.sender,isPrivate);
       
     // adding the registry address to the symbolToRegeistryAddress 
     symbolToRegeistryAddress[symbol]= address(registry);
@@ -65,7 +68,9 @@ contract NftRegistry {
 
     // adding the registry address to the uriToRegeistryAddress 
     uriToRegeistryAddress[uri]= address(registry);
-    
+
+    // adding the address to address array for userToRegisteries
+    userToRegistries[msg.sender].push(address(registry));
 
     emit RegistryCreated(name, symbol, description, uri, msg.sender);
 
@@ -83,10 +88,17 @@ contract NftRegistry {
       return lastaddress;
   }
 
-  function getlastUri(string memory uri) public view returns (address) {
+  function getRegistryAddressFromUri(string memory uri) public view returns (address) {
       return uriToRegeistryAddress[uri];
   }
 
+  function getRegistries(address _user) public view returns(address[] memory){
+    return userToRegistries[_user];
+  }
+
+  function getRegistry(string memory _symbol) public view returns(address){
+    return symbolToRegeistryAddress[_symbol];
+  }
   /**
    * this function allows you to change the address that is going to receive the fee amount
    */

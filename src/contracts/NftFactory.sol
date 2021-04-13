@@ -6,10 +6,13 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract NftFactory is ERC721{
   using SafeMath for uint256;
+
   string public Nftname;
   string public Nftsymbol;
   string public Nftdescription;
   string public Nfturi;
+  bool public isPrivate;
+
   // Total tokens starts at 0 because each new token must be minted and the
   // _mint() call adds 1 to totalTokens
   uint256 public totalTokens = 0;
@@ -34,7 +37,7 @@ constructor (string memory _name,
     string memory _symbol,
     string memory _description,
     string memory _uri,
-    address _caller) ERC721(_name,_symbol){
+    address _caller, bool _isPrivate) ERC721(_name,_symbol){
     _symbol = _upperCase(_symbol);
 
     Nftname = _name;
@@ -42,6 +45,7 @@ constructor (string memory _name,
     Nftdescription = _description;
     Nfturi = _uri;
     Nftcreator = _caller;
+    isPrivate=_isPrivate;
     totalTokens = 0;
     
     }
