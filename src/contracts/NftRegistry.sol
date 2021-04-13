@@ -1,18 +1,23 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.4;
-pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./NftFactory.sol";
 
-contract NftRegistry is NftFactory,AccessControl {
+contract NftRegistry {
+  // mapping to save the symbol to Registry Address 
+  mapping (string => address) public symbolToRegeistryAddress;
+  // mapping to save the Uri to Registry Address
+  mapping (string => address) public uriToRegeistryAddress;
+
   using SafeMath for uint256;
+  address lastaddress;
+  string lastUri;
   address feeAccount = 0x0000000000000000000000000000000000000000;
+  address private _owner;
   constructor(address _feeAccount) public {
     feeAccount = _feeAccount;
-    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    registries["POWA"] = REGISTRY("Cifipowa", "POWA", "initial Cifipowa", "we can just add url of metadata here" , msg.sender);
+    address _owner = msg.sender;
   }
 
   /*
@@ -27,7 +32,7 @@ contract NftRegistry is NftFactory,AccessControl {
    uint256 constant FEE = 10;
    uint8 cifiDecimals = cifiTokenContract.decimals();
    uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
-
+  
   event RegistryCreated(
     string name,
     string symbol,
@@ -36,49 +41,59 @@ contract NftRegistry is NftFactory,AccessControl {
     address caller
   );
   
-  modifier uniqueSymbol(string memory symbol){
-      require(
-      keccak256(bytes(registries[symbol].symbol)) != keccak256(bytes(symbol)),
-      "symbol is already taken"
-    );
-    _;
-  }
-
+ 
   function createRegistry(
     string memory name,
     string memory symbol,
     string memory description,
     string memory uri
-  ) public uniqueSymbol (symbol)returns (bool) {
+  ) public  returns (address) {
     require(msg.sender != address(0), "Invalid address");
     require(bytes(name).length != 0, "name can't be empty");
     require(bytes(symbol).length != 0, "symbol can't be empty");
+    uniqueSymbol(symbol);
+    cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
+    NftFactory registry =
+      new NftFactory(name, symbol, description, uri, msg.sender);
+      
+    // adding the registry address to the symbolToRegeistryAddress 
+    symbolToRegeistryAddress[symbol]= address(registry);
 
-       cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
-    Registry(name, symbol, description, uri, msg.sender);
+    // saving the last registry address 
+    lastaddress = address(registry);
+
+
+    // adding the registry address to the uriToRegeistryAddress 
+    uriToRegeistryAddress[uri]= address(registry);
+    
+
     emit RegistryCreated(name, symbol, description, uri, msg.sender);
 
-    return true;
+    return address(registry);
+  }
+  
+  
+  function uniqueSymbol(string memory symbol) public view returns(bool){
+    require(symbolToRegeistryAddress[symbol] == address(0),"symbol already used");
+      return true;
+  }
+  
+
+  function getlastAddress() public view returns (address) {
+      return lastaddress;
   }
 
-   function getRegistryAddress(string memory symbol)
-    public
-    view
-    returns (address)
-  {
-    require(
-      keccak256(bytes(registries[symbol].symbol)) == keccak256(bytes(symbol)),
-      "symbol is already taken"
-    );
-    return registries[symbol].creator;
+  function getlastUri(string memory uri) public view returns (address) {
+      return uriToRegeistryAddress[uri];
   }
 
   /**
-   * this function allows you to change the address that is going to receive the fee amount  
+   * this function allows you to change the address that is going to receive the fee amount
    */
    function ChangeFeeAccount(address newFeeAccount) public returns (bool) {
-     require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not an admin");
-    feeAccount = newFeeAccount;
-    return true;
-  }  
+     //require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not an admin");
+     require(msg.sender == _owner);
+     feeAccount = newFeeAccount;
+     return true;
+   }
 }

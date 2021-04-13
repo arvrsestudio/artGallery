@@ -1,76 +1,55 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.4;
-pragma experimental ABIEncoderV2;
 
-import "./ERC721_FORKED.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
-contract NftFactory is ERC721_FORKED {
-  string internal _name;
-  string internal _symbol;
-  string internal _description;
-  string internal _uri;
+contract NftFactory is ERC721{
+  using SafeMath for uint256;
+  string public Nftname;
+  string public Nftsymbol;
+  string public Nftdescription;
+  string public Nfturi;
   // Total tokens starts at 0 because each new token must be minted and the
   // _mint() call adds 1 to totalTokens
-  uint256 totalTokens = 0;
+  uint256 public totalTokens = 0;
 
-  address internal _creator;
+  address public Nftcreator;
 
   // Mapping from owner to list of owned token IDs
   mapping(address => uint256[]) ownedTokens;
 
-  // Mapping from owner to list of owned Registry symbols
-  mapping(address => string[]) ownedRegistries;
-
   // Metadata is a URL that points to a json dictionary
   mapping(uint256 => string) tokenIdToMetadata;
-
-  // mapping from symbol to full registration info
-  mapping(string => REGISTRY) public registries;
 
   event MetadataAssigned(address indexed _owner, uint256 _tokenId, string _url);
   event Mint(string url);
 
   /**
-   * its a struct to save every registry been made and store it to fetch any registry by chosing the symbol only
-   * also good for making sure that symbols should be unique
-   */
-  struct REGISTRY {
-    string name;
-    string symbol;
-    string description;
-    string uri;
-    address creator;
-  }
-
-  /**
    * a registry function that iis been called by the NFT registry smart contract
    */
 
-  function Registry(
-    string memory name,
-    string memory symbol,
-    string memory description,
-    string memory uri,
-    address caller
-  ) internal {
-    symbol = _upperCase(symbol);
 
-    _name = name;
-    _symbol = symbol;
-    _description = description;
-    _uri = uri;
-    _creator = caller;
+constructor (string memory _name,
+    string memory _symbol,
+    string memory _description,
+    string memory _uri,
+    address _caller){
+    _symbol = _upperCase(_symbol);
+
+    Nftname = _name;
+    Nftsymbol = _symbol;
+    Nftdescription = _description;
+    Nfturi = _uri;
+    Nftcreator = _caller;
     totalTokens = 0;
-
-    registries[symbol] = REGISTRY(_name, _symbol, _description, _uri , msg.sender);
-    ownedRegistries[msg.sender].push(_symbol);
-  }
+    }
 
   /**
    * this function assignes the URI to automatically add the id number at the end of the URI
    */
   function assignDataToToken(uint256 id, string memory uri) public {
-    require(msg.sender == _creator);
+    require(msg.sender == Nftcreator);
     bytes memory _url = bytes(uri);
 
     _url = abi.encodePacked(_url, bytes("/"));
@@ -98,23 +77,6 @@ contract NftFactory is ERC721_FORKED {
   function tokensOf(address _owner) public view returns (uint256[] memory) {
     require(_owner != address(0), "invalid owner");
     return ownedTokens[_owner];
-  }
-
-  /**
-   * this function helps with queries to Fetch all the registries that the address owns by givine address
-  */
-  function registriesOf(address _owner) public view returns (REGISTRY[] memory)
-  {
-    require(_owner != address(0), "invalid owner");
-    string[] memory _registries =  ownedRegistries[_owner];
-    uint counter=0;
-    uint length = _registries.length;
-    REGISTRY[] memory _ownedRegistries = new REGISTRY[](length);
-    while(counter < length){
-      _ownedRegistries[counter] = (registries[_registries[counter]]);
-      counter++;
-    }
-    return _ownedRegistries;
   }
 
 
@@ -187,38 +149,23 @@ contract NftFactory is ERC721_FORKED {
    * this function allows to mint more of your NFT  
    */
   function mint(string memory url) public {
-    require(msg.sender == _creator);
-    uint256 currentTokenCount = totalSupply();
+    require(msg.sender == Nftcreator);
+    totalTokens = totalSupply();
     // The index of the newest token is at the # totalTokens.
-    _mint(msg.sender, currentTokenCount);
+    _mint(msg.sender, totalTokens);
     // assign address to array of owned tokens aned you can qury what ids the address owns
     uint256[] storage ids = ownedTokens[msg.sender];
-    ids.push(currentTokenCount);
+    ids.push(totalTokens);
     ownedTokens[msg.sender] = ids;
     // _mint() call adds 1 to total tokens, but we want the token at index - 1
-    tokenIdToMetadata[currentTokenCount] = url;
+    tokenIdToMetadata[totalTokens] = url;
     emit Mint(url);
   }
-  
-  function mintCifiPowa(string memory url) public {
-    uint256 currentTokenCount = totalSupply();
-    // The index of the newest token is at the # totalTokens.
-    _mint(msg.sender, currentTokenCount);
-    // assign address to array of owned tokens aned you can qury what ids the address owns
-    uint256[] storage ids = ownedTokens[msg.sender];
-    ids.push(currentTokenCount);
-    ownedTokens[msg.sender] = ids;
-    // _mint() call adds 1 to total tokens, but we want the token at index - 1
-    tokenIdToMetadata[currentTokenCount] = url;
-    emit Mint(url);
-  }
-
 
   /**
    * this function allows you burn your NFT  
    */
-  function burn(string memory symbol, uint256 _id) public returns (bool) {
-    require(registries[symbol].creator == msg.sender);
+  function burn( uint256 _id) public returns (bool) {
     _burn(_id);
     return true;
   }
