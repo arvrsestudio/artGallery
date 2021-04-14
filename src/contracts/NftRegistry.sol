@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.22 <0.8.0;
+pragma solidity >=0.4.22 <0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./NftFactory.sol";
 
 contract NftRegistry {
+  using SafeMath for uint256;
   // mapping to save the symbol to Registry Address 
-  mapping (string => address) public symbolToRegeistryAddress;
+  mapping (string => address)  symbolToRegeistryAddress;
   // mapping to save the Uri to Registry Address
-  mapping (string => address) public uriToRegeistryAddress;
+  mapping (string => address)  uriToRegeistryAddress;
   //mapping to save all the registry addresses of an owner
-  mapping(address=> address[]) public userToRegistries;
+  mapping(address=> address[])  userToRegistries;
 
   address lastaddress;
   string lastUri;
@@ -29,10 +30,10 @@ contract NftRegistry {
    * but for testing purposes just deploy the scifiToken to Ganache and take the address and use it.
    */
 
-  //  ERC20 cifiTokenContract = ERC20(0xb806d1a6C0AF8f0679E59104603aac4A417A790c);
-   uint256 constant FEE = 10;
-  //  uint8 cifiDecimals = cifiTokenContract.decimals();
-  //  uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
+    ERC20 cifiTokenContract = ERC20(0xb806d1a6C0AF8f0679E59104603aac4A417A790c);
+    uint256 FEE = 10;
+    uint8 cifiDecimals = cifiTokenContract.decimals();
+    uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
   
   event RegistryCreated(
     string name,
@@ -54,7 +55,7 @@ contract NftRegistry {
     require(bytes(name).length != 0, "name can't be empty");
     require(bytes(symbol).length != 0, "symbol can't be empty");
     uniqueSymbol(symbol);
-    // cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
+     cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
     NftFactory registry =
       new NftFactory(name, symbol, description, uri, msg.sender,isPrivate);
       
@@ -102,9 +103,14 @@ contract NftRegistry {
    * this function allows you to change the address that is going to receive the fee amount
    */
    function ChangeFeeAccount(address newFeeAccount) public returns (bool) {
-     //require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not an admin");
      require(msg.sender == _owner);
      feeAccount = newFeeAccount;
+     return true;
+   }
+   
+   function ChangeFeeAmount(uint256 newFeeAmount) public returns (bool) {
+     require(msg.sender == _owner);
+     FEE = newFeeAmount;
      return true;
    }
 }

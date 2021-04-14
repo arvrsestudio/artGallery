@@ -2,7 +2,6 @@
 pragma solidity >=0.4.22 <0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract NftFactory is ERC721{
   using SafeMath for uint256;
@@ -73,8 +72,8 @@ constructor (string memory _name,
    */
   function approveMany(address _to, uint256[] memory _tokenIds) public {
     /* Allows bulk-approval of many tokens. This function is useful for
-       exchanges where users can make a single tx to enable the call of
-       transferFrom for those tokens by an exchange contract. */
+      exchanges where users can make a single tx to enable the call of
+      transferFrom for those tokens by an exchange contract. */
     for (uint256 i = 0; i < _tokenIds.length; i++) {
       // approve handles the check for if one who is approving is the owner.
       approve(_to, _tokenIds[i]);
@@ -99,28 +98,13 @@ constructor (string memory _name,
     address to,
     uint256 tokenId
   ) public virtual override {
-    require(from != address(0), "invalid address");
-    require(to != address(0), "invalid address");
-    // add require to make sure that the tokenid exsistes
-    safeTransferFrom(from, to, tokenId, "");
-  }
-
-  /**
-   * this overload function allows to transfer tokens and updates all the mapping queries(with filling the URI)  
-   */
-  function safeTransferFrom(
-    address from,
-    address to,
-    uint256 tokenId,
-    bytes memory _data
-  ) public virtual override {
     require(
       _isApprovedOrOwner(_msgSender(), tokenId),
       "ERC721: transfer caller is not owner nor approved"
     );
     require(from != address(0), "invalid address");
     require(to != address(0), "invalid address");
-    _safeTransfer(from, to, tokenId, _data);
+    _safeTransfer(from, to, tokenId, "");
     uint256[] memory fromIds = ownedTokens[from];
     uint256[] memory newFromIds = new uint256[](fromIds.length - 1);
     uint256[] storage toIds = ownedTokens[to];
