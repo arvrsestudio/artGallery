@@ -166,6 +166,19 @@ constructor (string memory _name,
     emit Mint(url);
   }
   
+  /**
+   * this function allows you to change the Registry privacy if its false it will change to true, if its true it will change to false  
+   */
+
+  function changeRegisterPrivacy() public{
+    require(msg.sender == Nftcreator);
+    if (isPrivate == true) {
+        isPrivate = false;
+    } else if (isPrivate == false) {
+        isPrivate = true;
+    }
+  }
+  
 
   /**
    * this function allows you burn your NFT  
