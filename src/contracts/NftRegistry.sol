@@ -5,12 +5,17 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./NftFactory.sol";
 
 contract NftRegistry {
+
+
   // mapping to save the symbol to Registry Address 
   mapping (string => address) public symbolToRegeistryAddress;
   // mapping to save the Uri to Registry Address
   mapping (string => address) public uriToRegeistryAddress;
   //mapping to save all the registry addresses of an owner
   mapping(address=> address[]) public userToRegistries;
+  // Array to store latest minted registries
+  address[] latestRegistries;
+  uint16 latestRegistriesCounter=0;
 
   using SafeMath for uint256;
   address lastaddress;
@@ -72,6 +77,18 @@ contract NftRegistry {
     // adding the address to address array for userToRegisteries
     userToRegistries[msg.sender].push(address(registry));
 
+    // Add the registry in latestRegistries array 
+    if(latestRegistriesCounter<12){
+        latestRegistries[latestRegistriesCounter]=address(registry);
+        latestRegistriesCounter++;
+    }
+    else{
+      for(uint cnt=1;cnt<12;cnt++){
+        latestRegistries[cnt-1]=latestRegistries[cnt];
+      }
+      latestRegistries[11]=address(registry);
+    }
+
     emit RegistryCreated(name, symbol, description, uri, msg.sender);
 
     return address(registry);
@@ -98,6 +115,10 @@ contract NftRegistry {
 
   function getRegistry(string memory _symbol) public view returns(address){
     return symbolToRegeistryAddress[_symbol];
+  }
+
+  function getLatestRegistries() public view returns(address[] memory){
+    return latestRegistries;
   }
   /**
    * this function allows you to change the address that is going to receive the fee amount

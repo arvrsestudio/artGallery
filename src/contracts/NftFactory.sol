@@ -155,7 +155,8 @@ constructor (string memory _name,
    */
   function mint(string memory url) public {
     require(msg.sender == Nftcreator);
-    totalTokens = totalSupply();
+    //I am adding 1 to total supply to start the id from 1 and not 0
+    totalTokens = totalSupply() +1 ;
     // The index of the newest token is at the # totalTokens.
     _mint(msg.sender, totalTokens);
     // assign address to array of owned tokens aned you can qury what ids the address owns
