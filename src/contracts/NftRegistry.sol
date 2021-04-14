@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./NftFactory.sol";
 
 contract NftRegistry {
@@ -12,7 +11,6 @@ contract NftRegistry {
   //mapping to save all the registry addresses of an owner
   mapping(address=> address[]) public userToRegistries;
 
-  using SafeMath for uint256;
   address lastaddress;
   string lastUri;
   address feeAccount = 0x0000000000000000000000000000000000000000;

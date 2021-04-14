@@ -1,8 +1,8 @@
 {
-  "name": "eth-marketplace",
+  "name": "nftfactory",
   "version": "0.1.0",
-  "description": "An Ethereum Marketplace",
-  "author": "gregory@dappuniversity.com",
+  "description": "Nft Factory",
+  "author": "Arvrse Studio",
   "dependencies": {
     "@openzeppelin/contracts": "^3.4.0",
     "babel-polyfill": "6.26.0",
