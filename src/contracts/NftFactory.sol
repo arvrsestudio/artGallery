@@ -47,7 +47,6 @@ constructor (string memory _name,
     Nftcreator = _caller;
     isPrivate=_isPrivate;
     totalTokens = 0;
-    
     }
 
   /**
@@ -155,7 +154,7 @@ constructor (string memory _name,
    */
   function mint(string memory url) public {
     require(msg.sender == Nftcreator);
-    totalTokens = totalSupply();
+    totalTokens = totalSupply().add(1);
     // The index of the newest token is at the # totalTokens.
     _mint(msg.sender, totalTokens);
     // assign address to array of owned tokens aned you can qury what ids the address owns
@@ -166,6 +165,7 @@ constructor (string memory _name,
     tokenIdToMetadata[totalTokens] = url;
     emit Mint(url);
   }
+  
 
   /**
    * this function allows you burn your NFT  
@@ -173,6 +173,10 @@ constructor (string memory _name,
   function burn( uint256 _id) public returns (bool) {
     _burn(_id);
     return true;
+  }
+  
+  function getTotalTokens() public view returns (uint256){
+      return totalTokens;
   }
 
   /**
