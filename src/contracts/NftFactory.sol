@@ -38,7 +38,6 @@ constructor (string memory _name,
     string memory _description,
     string memory _uri,
     address _caller, bool _isPrivate) ERC721(_name,_symbol){
-    _symbol = _upperCase(_symbol);
 
     Nftname = _name;
     Nftsymbol = _symbol;
@@ -48,21 +47,6 @@ constructor (string memory _name,
     isPrivate=_isPrivate;
     totalTokens = 0;
     }
-
-  /**
-   * this function assignes the URI to automatically add the id number at the end of the URI
-   */
-  function assignDataToToken(uint256 id, string memory uri) public {
-    require(msg.sender == Nftcreator);
-    bytes memory _url = bytes(uri);
-
-    _url = abi.encodePacked(_url, bytes("/"));
-    _url = abi.encodePacked(_url, _uintToBytes(id));
-    _url = abi.encodePacked(_url, bytes(".json"));
-
-    tokenIdToMetadata[id] = string(_url);
-    MetadataAssigned(ownerOf(id), id, string(_url));
-  }
 
   /**
    * this function helps with queries to Fetch the metadata for a givine token id
@@ -191,48 +175,5 @@ constructor (string memory _name,
   function getTotalTokens() public view returns (uint256){
       return totalTokens;
   }
-
-  /**
-   * this function is been created just to convert uint variable to bytes
-   *(private function only used in the "assignDataToToken" function in order to convert the uint variable to bytes
-   * in order to concatenate it )  
-   */
-  function _uintToBytes(uint256 _int) internal pure returns (bytes memory) {
-    uint256 maxlength = 100;
-    bytes memory reversed = new bytes(maxlength);
-    uint256 i = 0;
-    if (_int == 0) return bytes("0");
-    while (_int != 0) {
-      uint256 remainder = _int % 10;
-      _int = _int / 10;
-      reversed[i++] = bytes1(uint8(48 + remainder));
-    }
-    bytes memory s = new bytes(i + 1);
-    for (uint256 j = 0; j <= i; j++) {
-      s[j] = reversed[i - j];
-    }
-    return s;
-  }
-
-  /**
-   * this function is been created just to convert small strings to capital 
-   *(private function only used in functions that we want to make the symbol auto capital 
-   * in order to concatenate it )  
-   */
-
-  function _upperCase(string memory enter)
-    internal
-    pure
-    returns (string memory)
-  {
-    bytes memory strbyte = bytes(enter);
-    for (uint256 i = 0; i < strbyte.length; i++) {
-      if (
-        uint8(strbyte[i]) >= uint8(bytes1("a")) &&
-        uint8(strbyte[i]) <= uint8(bytes1("z"))
-      ) strbyte[i] = bytes1(uint8(strbyte[i]) - 32);
-    }
-    enter = string(strbyte);
-    return enter;
-  }
+ 
 }

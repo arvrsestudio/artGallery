@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.22 <0.8.4;
+pragma solidity >=0.4.22 <0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./NftFactory.sol";
 
@@ -19,6 +19,7 @@ contract NftRegistry {
     feeAccount = _feeAccount;
     _owner = msg.sender;
   }
+
 
   /*
    * when you deploy Cifi_Token to Local testNet (Ganache) or to testnet like binance test net take the address of the
