@@ -1,4 +1,4 @@
-pragma solidity >=0.4.22 <0.8.4;\n\n// SPDX-License-Identifier: MIT
+pragma solidity >=0.4.22 <0.8.4;
 
 
 
@@ -21,7 +21,7 @@ abstract contract Context {
         this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
         return msg.data;
     }
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -44,7 +44,7 @@ interface IERC165 {
      * This function call must use less than 30 000 gas.
      */
     function supportsInterface(bytes4 interfaceId) external view returns (bool);
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -172,7 +172,7 @@ interface IERC721 is IERC165 {
       * Emits a {Transfer} event.
       */
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -198,7 +198,7 @@ interface IERC721Metadata is IERC721 {
      * @dev Returns the Uniform Resource Identifier (URI) for `tokenId` token.
      */
     function tokenURI(uint256 tokenId) external view returns (string memory);
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -226,7 +226,7 @@ interface IERC721Enumerable is IERC721 {
      * Use along with {totalSupply} to enumerate all tokens.
      */
     function tokenByIndex(uint256 index) external view returns (uint256);
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -246,7 +246,7 @@ interface IERC721Receiver {
      * The selector can be obtained in Solidity with `IERC721.onERC721Received.selector`.
      */
     function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external returns (bytes4);
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -299,7 +299,7 @@ abstract contract ERC165 is IERC165 {
         require(interfaceId != 0xffffffff, "ERC165: invalid interface id");
         _supportedInterfaces[interfaceId] = true;
     }
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -512,7 +512,7 @@ library SafeMath {
         require(b > 0, errorMessage);
         return a % b;
     }
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -700,7 +700,7 @@ library Address {
             }
         }
     }
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -996,7 +996,7 @@ library EnumerableSet {
     function at(UintSet storage set, uint256 index) internal view returns (uint256) {
         return uint256(_at(set._inner, index));
     }
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -1261,7 +1261,7 @@ library EnumerableMap {
     function get(UintToAddressMap storage map, uint256 key, string memory errorMessage) internal view returns (address) {
         return address(uint160(uint256(_get(map._inner, bytes32(key), errorMessage))));
     }
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -1294,7 +1294,7 @@ library Strings {
         }
         return string(buffer);
     }
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -1771,7 +1771,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Enumerable 
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
     function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal virtual { }
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 
 
@@ -1987,7 +1987,7 @@ abstract contract AccessControl is Context {
             emit RoleRevoked(role, account, _msgSender());
         }
     }
-}\n\n// SPDX-License-Identifier: MIT
+}
 
 pragma experimental ABIEncoderV2;
 
