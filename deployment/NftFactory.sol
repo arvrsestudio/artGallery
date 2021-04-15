@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.4;
 
 
@@ -13,7 +14,7 @@ pragma solidity >=0.4.22 <0.8.4;
  * This contract is only required for intermediate, library-like contracts.
  */
 abstract contract Context {
-    function _msgSender() internal view virtual returns (address payable) {
+    function _msgSender() internal view virtual returns (address) {
         return msg.sender;
     }
 
@@ -269,7 +270,7 @@ abstract contract ERC165 is IERC165 {
      */
     mapping(bytes4 => bool) private _supportedInterfaces;
 
-    constructor () internal {
+    constructor () {
         // Derived contracts need only register support for their own interfaces,
         // we register support for ERC165 itself here
         _registerInterface(_INTERFACE_ID_ERC165);
@@ -1386,7 +1387,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Enumerable 
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    constructor (string memory name_, string memory symbol_) public {
+    constructor (string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
 

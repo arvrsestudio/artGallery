@@ -1,3 +1,5 @@
+
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.4;
 
 
@@ -13,7 +15,7 @@ pragma solidity >=0.4.22 <0.8.4;
  * This contract is only required for intermediate, library-like contracts.
  */
 abstract contract Context {
-    function _msgSender() internal view virtual returns (address payable) {
+    function _msgSender() internal view virtual returns (address) {
         return msg.sender;
     }
 
@@ -364,7 +366,7 @@ contract ERC20 is Context, IERC20 {
      * All three of these values are immutable: they can only be set once during
      * construction.
      */
-    constructor (string memory name_, string memory symbol_) public {
+    constructor (string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
         _decimals = 18;
@@ -863,7 +865,7 @@ abstract contract ERC165 is IERC165 {
      */
     mapping(bytes4 => bool) private _supportedInterfaces;
 
-    constructor () internal {
+    constructor () {
         // Derived contracts need only register support for their own interfaces,
         // we register support for ERC165 itself here
         _registerInterface(_INTERFACE_ID_ERC165);
@@ -1767,7 +1769,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, IERC721Enumerable 
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    constructor (string memory name_, string memory symbol_) public {
+    constructor (string memory name_, string memory symbol_) {
         _name = name_;
         _symbol = symbol_;
 
@@ -2335,7 +2337,7 @@ contract NftRegistry {
     address feeAccount = 0x0000000000000000000000000000000000000000;
     address private _owner;
 
-    constructor(address _feeAccount) public {
+    constructor(address _feeAccount) {
         feeAccount = _feeAccount;
         _owner = msg.sender;
     }
