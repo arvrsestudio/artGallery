@@ -30,7 +30,7 @@ contract NftRegistry {
    * but for testing purposes just deploy the scifiToken to Ganache and take the address and use it.
    */
 
-    ERC20 cifiTokenContract = ERC20(0xcB1DA6e9947e4cd22111C335f63110d71a4Ad1c2);
+    ERC20 cifiTokenContract = ERC20(0x899137Cc390760fb39E2662C1c42b8188C32256f);
     uint256 FEE = 10;
     uint8 cifiDecimals = cifiTokenContract.decimals();
     uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
