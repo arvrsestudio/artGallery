@@ -40,7 +40,8 @@ contract NftRegistry {
         string symbol,
         string description,
         string uri,
-        address caller
+        address caller,
+        address registryAddress
     );
 
     function createRegistry(
@@ -77,7 +78,7 @@ contract NftRegistry {
         // adding the address to address array for userToRegisteries
         userToRegistries[msg.sender].push(address(registry));
 
-        emit RegistryCreated(name, symbol, description, uri, msg.sender);
+        emit RegistryCreated(name, symbol, description, uri, msg.sender,address(registry));
 
         return address(registry);
     }
