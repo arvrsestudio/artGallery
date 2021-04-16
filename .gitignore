@@ -3,3 +3,4 @@ package-lock.json
 truffle-config.js
 src/contracts/artifacts
 .env
+yarn.lock
