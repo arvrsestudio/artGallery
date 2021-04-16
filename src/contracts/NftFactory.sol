@@ -29,7 +29,7 @@ contract NftFactory is ERC721 {
         uint256 _tokenId,
         string _url
     );
-    event Mint(string url);
+    event Mint(string url,uint256 tokenId );
 
     /**
      * a registry function that iis been called by the NFT registry smart contract
@@ -135,7 +135,7 @@ contract NftFactory is ERC721 {
         ownedTokens[msg.sender] = ids;
         // _mint() call adds 1 to total tokens, but we want the token at index - 1
         tokenIdToMetadata[totalTokens] = url;
-        emit Mint(url);
+        emit Mint(url,totalTokens);
     }
 
     /**
