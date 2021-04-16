@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract CifiPowa is ERC721,AccessControl {
+    using SafeMath for uint256;
 
   string public Nftname;
   string public Nftsymbol;
@@ -24,7 +25,7 @@ contract CifiPowa is ERC721,AccessControl {
   mapping(uint256 => string) tokenIdToMetadata;
 
   event MetadataAssigned(address indexed _owner, uint256 _tokenId, string _url);
-  event Mint(string url);
+  event Mint(string url, uint256 tokenId);
 
   /**
    * a registry function that iis been called by the NFT registry smart contract
@@ -144,7 +145,7 @@ contract CifiPowa is ERC721,AccessControl {
    * this function allows to mint more of your NFT  
    */
   function mint(string memory url) public {
-    uint256 currentTokenCount = totalSupply();
+    uint256 currentTokenCount = totalSupply().add(1);
     // The index of the newest token is at the # totalTokens.
     _mint(msg.sender, currentTokenCount);
     // assign address to array of owned tokens aned you can qury what ids the address owns
@@ -153,7 +154,7 @@ contract CifiPowa is ERC721,AccessControl {
     ownedTokens[msg.sender] = ids;
     // _mint() call adds 1 to total tokens, but we want the token at index - 1
     tokenIdToMetadata[currentTokenCount] = url;
-    emit Mint(url);
+    emit Mint(url, currentTokenCount);
   }
 
   /**
