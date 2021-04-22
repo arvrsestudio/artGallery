@@ -137,19 +137,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "feeAmount",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -295,11 +282,11 @@
 			]
 		},
 		"@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-			"keccak256": "0x9d24422977f36f7cf7560e15582d4a70aab32401ea9adf9a34b9afe3a3d8adb9",
+			"keccak256": "0xca0c2396dbeb3503b51abf4248ebf77a1461edad513c01529df51850a012bee3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b9a5a5ca2c2094cd61713b3ee8b886f461d46e60900fc45b95014190d7b4eae6",
-				"dweb:/ipfs/QmbqEU2i66MDdT4Qds3ZpgfeNcgwMAMtfn1Tz6EfFzQaDh"
+				"bzz-raw://991b44ff44e0496e8554a90f4c0512c28faed45104d40430019f3c67ea67740e",
+				"dweb:/ipfs/Qmc3nRapVbcctELoZS5qe17zLkFB3bETBfwzCTMF1CSuGE"
 			]
 		},
 		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
@@ -311,11 +298,11 @@
 			]
 		},
 		"@openzeppelin/contracts/token/ERC721/ERC721.sol": {
-			"keccak256": "0x7850875d6eafbd96585e5117255fc6f722eb0650726b6866418a85bf2e97206a",
+			"keccak256": "0x118ed7540f56b21ff92e21ebaa73584048e98d2ac04ca67571329bb8dbd9032f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://55c49fa33fe12035bac50102dde1ad2dac57b9b3a911e0fbf7e0a05f90f55d0e",
-				"dweb:/ipfs/QmeA2pQ1u6vH66yHpohhffjXDScyt4bXxW2TAxo3vBYTJg"
+				"bzz-raw://da2918b7aff73dd51d41bfcfa548f81eb50531b8353500fdbdacf297076db070",
+				"dweb:/ipfs/Qmb8ixAs1vBjZRowQNuNg6bRf2NZmgZ1JTBxmQS14PHpcL"
 			]
 		},
 		"@openzeppelin/contracts/token/ERC721/IERC721.sol": {
@@ -399,11 +386,11 @@
 			]
 		},
 		"src/contracts/NftRegistry.sol": {
-			"keccak256": "0xf8a0fa5625637cffbb3f566f3cbce2a307d21e39645f800282e9a21059c607ce",
+			"keccak256": "0xef5e216d413c27c0d6378a9bdc1d2682d3420e7927027dc56b64b41d9d8552bd",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b42ddbd3ff9aa38e5c30399fb61e002ee99734f19750244bce4c34fe3e904e48",
-				"dweb:/ipfs/QmeeDKncSJtCscGSsTytBc1MDzx5JhMaw9GUqgTXmurpqy"
+				"bzz-raw://97486bd61881d0c797b6be10a62d4e18c5c7043ca0de773044ec01291b903d03",
+				"dweb:/ipfs/QmdjP6Y6VQNKsn1Yu7UPmMs6uyCtoD8D9hVV1bL9AjisXA"
 			]
 		}
 	},
