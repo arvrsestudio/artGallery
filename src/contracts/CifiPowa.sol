@@ -8,15 +8,15 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 contract CifiPowa is ERC721,AccessControl {
     using SafeMath for uint256;
 
-  string public Nftname;
-  string public Nftsymbol;
-  string public Nftdescription;
-  string public Nfturi;
+  string public Artname;
+  string public Artsymbol;
+  string public Artdescription;
+  string public Arturi;
   // Total tokens starts at 0 because each new token must be minted and the
   // _mint() call adds 1 to totalTokens
   uint256 totalTokens = 0;
 
-  address public Nftcreator;
+  address public Artcreator;
 
   // Mapping from owner to list of owned token IDs
   mapping(address => uint256[]) ownedTokens;
@@ -28,15 +28,15 @@ contract CifiPowa is ERC721,AccessControl {
   event Mint(string url, uint256 tokenId);
 
   /**
-   * a registry function that iis been called by the NFT registry smart contract
+   * a gallery function that is been called by the ART gallery smart contract
    */
 
    constructor () ERC721("Cifipowa","POWA"){
-    Nftname ="Cifipowa";
-    Nftsymbol ="POWA";
-    Nftdescription ="initial Cifipowa";
-    Nfturi ="we can just add url of metadata here";
-    Nftcreator = _msgSender();
+    Artname ="Cifipowa";
+    Artsymbol ="POWA";
+    Artdescription ="initial Cifipowa";
+    Arturi ="we can just add url of metadata here";
+    Artcreator = _msgSender();
     totalTokens = 0;
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     } 
