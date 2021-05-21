@@ -3,20 +3,20 @@ pragma solidity >=0.4.22 <0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract NftFactory is ERC721 {
+contract ArtFactory is ERC721 {
     using SafeMath for uint256;
 
-    string public Nftname;
-    string public Nftsymbol;
-    string public Nftdescription;
-    string public Nfturi;
+    string public Artname;
+    string public Artsymbol;
+    string public Artdescription;
+    string public Arturi;
     bool public isPrivate;
 
     // Total tokens starts at 0 because each new token must be minted and the
     // _mint() call adds 1 to totalTokens
     uint256 public totalTokens = 0;
 
-    address public Nftcreator;
+    address public Artcreator;
 
     // Mapping from owner to list of owned token IDs
     mapping(address => uint256[]) ownedTokens;
@@ -43,11 +43,11 @@ contract NftFactory is ERC721 {
         address _caller,
         bool _isPrivate
     ) ERC721(_name, _symbol) {
-        Nftname = _name;
-        Nftsymbol = _symbol;
-        Nftdescription = _description;
-        Nfturi = _uri;
-        Nftcreator = _caller;
+        Artname = _name;
+        Artsymbol = _symbol;
+        Artdescription = _description;
+        Arturi = _uri;
+        Artcreator = _caller;
         isPrivate = _isPrivate;
         totalTokens = 0;
     }
@@ -122,7 +122,7 @@ contract NftFactory is ERC721 {
     }
 
     /**
-     * this function allows to mint more of your NFT
+     * this function allows to mint more of your Art
      */
     function mint(string memory url) public {
         require(msg.sender == Nftcreator);
@@ -142,7 +142,7 @@ contract NftFactory is ERC721 {
      * this function allows you to change the Registry privacy if its false it will change to true, if its true it will change to false
      */
 
-    function changeRegisterPrivacy() public {
+    function changeRGallertPrivacy() public {
         require(msg.sender == Nftcreator);
         if (isPrivate == true) {
             isPrivate = false;
@@ -152,7 +152,7 @@ contract NftFactory is ERC721 {
     }
 
     /**
-     * this function allows you burn your NFT
+     * this function allows you burn your Art
      */
     function burn(uint256 _id) public returns (bool) {
         _burn(_id);
