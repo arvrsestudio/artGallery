@@ -3,14 +3,14 @@ pragma solidity >=0.4.22 <0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./NftFactory.sol";
 
-contract NftRegistry {
+contract ArtGallery {
     using SafeMath for uint256;
-    // mapping to save the symbol to Registry Address
-    mapping(string => address) symbolToRegeistryAddress;
-    // mapping to save the Uri to Registry Address
-    mapping(string => address) uriToRegeistryAddress;
-    //mapping to save all the registry addresses of an owner
-    mapping(address => address[]) userToRegistries;
+    // mapping to save the symbol to Gallery Address
+    mapping(string => address) symbolToGalleryAddress;
+    // mapping to save the Uri to Gallery Address
+    mapping(string => address) uriToGalleryAddress;
+    //mapping to save all the gallery addresses of an owner
+    mapping(address => address[]) userToGalleries;
 
     address lastaddress;
     string lastUri;
@@ -35,16 +35,16 @@ contract NftRegistry {
     uint8 cifiDecimals = cifiTokenContract.decimals();
     uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
-    event RegistryCreated(
+    event GalleryCreated(
         string name,
         string symbol,
         string description,
         string uri,
         address caller,
-        address registryAddress
+        address galleryAddress
     );
 
-    function createRegistry(
+    function createGallery(
         string memory name,
         string memory symbol,
         string memory description,
@@ -56,8 +56,8 @@ contract NftRegistry {
         require(bytes(symbol).length != 0, "symbol can't be empty");
         uniqueSymbol(symbol);
         cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
-        NftFactory registry =
-            new NftFactory(
+        ArtFactory gallery =
+            new ArtFactory(
                 name,
                 symbol,
                 description,
@@ -66,26 +66,26 @@ contract NftRegistry {
                 isPrivate
             );
 
-        // adding the registry address to the symbolToRegeistryAddress
-        symbolToRegeistryAddress[symbol] = address(registry);
+        // adding the gallery address to the symbolToGalleryAddress
+        symbolToGalleryAddress[symbol] = address(gallery);
 
-        // saving the last registry address
-        lastaddress = address(registry);
+        // saving the last gallery address
+        lastaddress = address(gallery);
 
-        // adding the registry address to the uriToRegeistryAddress
-        uriToRegeistryAddress[uri] = address(registry);
+        // adding the gallery address to the uriToGalleryAddress
+        uriToGalleryAddress[uri] = address(gallery);
 
-        // adding the address to address array for userToRegisteries
-        userToRegistries[msg.sender].push(address(registry));
+        // adding the address to address array for userToGalleries
+        userToGalleries[msg.sender].push(address(gallery));
 
-        emit RegistryCreated(name, symbol, description, uri, msg.sender,address(registry));
+        emit GalleryCreated(name, symbol, description, uri, msg.sender,address(gallery));
 
-        return address(registry);
+        return address(gallery);
     }
 
     function uniqueSymbol(string memory symbol) public view returns (bool) {
         require(
-            symbolToRegeistryAddress[symbol] == address(0),
+            symbolToGalleryAddress[symbol] == address(0),
             "symbol already used"
         );
         return true;
@@ -95,24 +95,24 @@ contract NftRegistry {
         return lastaddress;
     }
 
-    function getRegistryAddressFromUri(string memory uri)
+    function getGalleryAddressFromUri(string memory uri)
         public
         view
         returns (address)
     {
-        return uriToRegeistryAddress[uri];
+        return uriToGalleryAddress[uri];
     }
 
-    function getRegistries(address _user)
+    function getGalleries(address _user)
         public
         view
         returns (address[] memory)
     {
-        return userToRegistries[_user];
+        return userToGalleries[_user];
     }
 
-    function getRegistry(string memory _symbol) public view returns (address) {
-        return symbolToRegeistryAddress[_symbol];
+    function getGallery(string memory _symbol) public view returns (address) {
+        return symbolToGalleryAddress[_symbol];
     }
 
     /**
