@@ -125,7 +125,7 @@ contract ArtFactory is ERC721 {
      * this function allows to mint more of your Art
      */
     function mint(string memory url) public {
-        require(msg.sender == Nftcreator);
+        require(msg.sender == Artcreator);
         totalTokens = totalSupply().add(1);
         // The index of the newest token is at the # totalTokens.
         _mint(msg.sender, totalTokens);
@@ -142,8 +142,8 @@ contract ArtFactory is ERC721 {
      * this function allows you to change the Registry privacy if its false it will change to true, if its true it will change to false
      */
 
-    function changeRGallertPrivacy() public {
-        require(msg.sender == Nftcreator);
+    function changeGalleryPrivacy() public {
+        require(msg.sender == Artcreator);
         if (isPrivate == true) {
             isPrivate = false;
         } else if (isPrivate == false) {
