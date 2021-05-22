@@ -23,11 +23,11 @@ contract ArtGallery {
     }
 
     /*
-     * when you deploy Cifi_Token to Local testNet (Ganache) or to testnet like binance test net take the address of the
+     * when you deploy Cifi_Token to Local (Ganache) or to blockchain like binance mainnet take the address of the
      * deployed Cifi_Token and add it below
      * the address below is just a dummy one that we need to change once we deploy the Cifi_Token Contract to the
-     * binance main net and take the address of the contract and add it below
-     * but for testing purposes just deploy the scifiToken to Ganache and take the address and use it.
+     * binance mainnet and take the address of the contract and add it below
+     * but for testing purposes just deploy the cifiToken to Ganache and take the address and use it.
      */
 
     ERC20 cifiTokenContract = ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
