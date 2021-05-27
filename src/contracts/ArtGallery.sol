@@ -31,7 +31,7 @@ contract ArtGallery {
      */
 
     ERC20 cifiTokenContract = ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
-    uint256 FEE = 10;
+    uint256 FEE = 100;
     uint8 cifiDecimals = cifiTokenContract.decimals();
     uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
