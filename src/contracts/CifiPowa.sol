@@ -142,7 +142,7 @@ contract CifiPowa is ERC721,AccessControl {
   }
 
   /**
-   * this function allows to mint more of your NFT  
+   * this function allows to mint more of your ART  
    */
   function mint(string memory url) public {
     uint256 currentTokenCount = totalSupply().add(1);
