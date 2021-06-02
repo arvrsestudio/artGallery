@@ -24,7 +24,7 @@
     "truffle": "^5.1.49",
     "truffle-flattener": "1.5.0",
     "truffle-hdwallet-provider-privkey": "0.3.0",
-    "web3": "1.0.0-beta.55"
+    "web3": "1.2.6"
   },
   "devDependencies": {
     "prettier": "^2.2.1",
