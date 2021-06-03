@@ -1,13 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.8.4;
-pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
 
-contract CollateralizedArt is ERC721, AccessControl {
+contract TokenizedArtFactory is ERC721 {
     using SafeMath for uint256;
 
     ERC20 cifiTokenContractTest =
@@ -22,9 +18,11 @@ contract CollateralizedArt is ERC721, AccessControl {
     string public Artsymbol;
     string public Artdescription;
     string public Arturi;
+    bool public isPrivate;
+
     // Total tokens starts at 0 because each new token must be minted and the
     // _mint() call adds 1 to totalTokens
-    uint256 totalTokens = 0;
+    uint256 public totalTokens = 0;
 
     address public Artcreator;
 
@@ -39,7 +37,7 @@ contract CollateralizedArt is ERC721, AccessControl {
 
     mapping(string => address) acceptedTokens;
 
-    string[] public acceptedTokensSymbols;
+    string[] public acceptedTokenSymbols;
 
     event MetadataAssigned(
         address indexed _owner,
@@ -49,32 +47,24 @@ contract CollateralizedArt is ERC721, AccessControl {
     event Mint(string url, uint256 tokenId, string symbol, uint256 amount);
 
     /**
-     * a gallery function that is been called by the ART gallery smart contract
+     * a registry function that iis been called by the NFT registry smart contract
      */
 
-    constructor() ERC721("Collateralized Art", "cPOWA") {
-        Artname = "Collateralized Art";
-        Artsymbol = "cPOWA";
-        Artdescription = "Collateralized Art";
-        Arturi = "we can just add url of metadata here";
-        Artcreator = _msgSender();
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        string memory _description,
+        string memory _uri,
+        address _caller,
+        bool _isPrivate
+    ) ERC721(_name, _symbol) {
+        Artname = _name;
+        Artsymbol = _symbol;
+        Artdescription = _description;
+        Arturi = _uri;
+        Artcreator = _caller;
+        isPrivate = _isPrivate;
         totalTokens = 0;
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    }
-
-    /**
-     * this function assignes the URI to automatically add the id number at the end of the URI
-     */
-    function assignDataToToken(uint256 id, string memory uri) public {
-        require(msg.sender == Nftcreator);
-        bytes memory _url = bytes(uri);
-
-        _url = abi.encodePacked(_url, bytes("/"));
-        _url = abi.encodePacked(_url, _uintToBytes(id));
-        _url = abi.encodePacked(_url, bytes(".json"));
-
-        tokenIdToMetadata[id] = string(_url);
-        emit MetadataAssigned(ownerOf(id), id, string(_url));
     }
 
     /**
@@ -101,8 +91,8 @@ contract CollateralizedArt is ERC721, AccessControl {
      */
     function approveMany(address _to, uint256[] memory _tokenIds) public {
         /* Allows bulk-approval of many tokens. This function is useful for
-       exchanges where users can make a single tx to enable the call of
-       transferFrom for those tokens by an exchange contract. */
+      exchanges where users can make a single tx to enable the call of
+      transferFrom for those tokens by an exchange contract. */
         for (uint256 i = 0; i < _tokenIds.length; i++) {
             // approve handles the check for if one who is approving is the owner.
             approve(_to, _tokenIds[i]);
@@ -127,28 +117,13 @@ contract CollateralizedArt is ERC721, AccessControl {
         address to,
         uint256 tokenId
     ) public virtual override {
-        require(from != address(0), "invalid address");
-        require(to != address(0), "invalid address");
-        // add require to make sure that the tokenid exsistes
-        safeTransferFrom(from, to, tokenId, "");
-    }
-
-    /**
-     * this overload function allows to transfer tokens and updates all the mapping queries(with filling the URI)
-     */
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId,
-        bytes memory _data
-    ) public virtual override {
         require(
             _isApprovedOrOwner(_msgSender(), tokenId),
             "ERC721: transfer caller is not owner nor approved"
         );
         require(from != address(0), "invalid address");
         require(to != address(0), "invalid address");
-        _safeTransfer(from, to, tokenId, _data);
+        _safeTransfer(from, to, tokenId, "");
         uint256[] memory fromIds = ownedTokens[from];
         uint256[] memory newFromIds = new uint256[](fromIds.length - 1);
         uint256[] storage toIds = ownedTokens[to];
@@ -162,22 +137,23 @@ contract CollateralizedArt is ERC721, AccessControl {
     }
 
     /**
-     * this function allows to mint more of your ART
+     * this function allows to mint more of your Art
      */
     function mint(
         string memory url,
         string memory tokenSymbol,
         uint256 amount
     ) public {
-        uint256 currentTokenCount = totalSupply().add(1);
+        require(msg.sender == Artcreator);
+        totalTokens = totalSupply().add(1);
         // The index of the newest token is at the # totalTokens.
-        _mint(msg.sender, currentTokenCount);
+        _mint(msg.sender, totalTokens);
         // assign address to array of owned tokens aned you can qury what ids the address owns
         uint256[] storage ids = ownedTokens[msg.sender];
-        ids.push(currentTokenCount);
+        ids.push(totalTokens);
         ownedTokens[msg.sender] = ids;
         // _mint() call adds 1 to total tokens, but we want the token at index - 1
-        tokenIdToMetadata[currentTokenCount] = url;
+        tokenIdToMetadata[totalTokens] = url;
 
         ERC20 acceptedToken = ERC20(acceptedTokens[tokenSymbol]);
         if (acceptedToken != cifiTokenContractTest) {
@@ -190,11 +166,25 @@ contract CollateralizedArt is ERC721, AccessControl {
         acceptedToken.transferFrom(msg.sender, address(this), feeAmount);
         tokenID_symbol[currentTokenCount] = tokenSymbol;
         tokenID_symbol[currentTokenCount] = amount;
-        emit Mint(url, currentTokenCount, tokenSymbol, amount);
+
+        emit Mint(url, totalTokens, tokenSymbol, amount);
     }
 
     /**
-     * this function allows you burn your NFT
+     * this function allows you to change the Registry privacy if its false it will change to true, if its true it will change to false
+     */
+
+    function changeGalleryPrivacy() public {
+        require(msg.sender == Artcreator);
+        if (isPrivate == true) {
+            isPrivate = false;
+        } else if (isPrivate == false) {
+            isPrivate = true;
+        }
+    }
+
+    /**
+     * this function allows you burn your Art
      */
     function burn(uint256 _id) public returns (bool) {
         address owner = ownerOf(_id);
@@ -206,48 +196,8 @@ contract CollateralizedArt is ERC721, AccessControl {
         return true;
     }
 
-    /**
-     * this function is been created just to convert uint variable to bytes
-     *(private function only used in the "assignDataToToken" function in order to convert the uint variable to bytes
-     * in order to concatenate it )
-     */
-    function _uintToBytes(uint256 _int) internal pure returns (bytes memory) {
-        uint256 maxlength = 100;
-        bytes memory reversed = new bytes(maxlength);
-        uint256 i = 0;
-        if (_int == 0) return bytes("0");
-        while (_int != 0) {
-            uint256 remainder = _int % 10;
-            _int = _int / 10;
-            reversed[i++] = bytes1(uint8(48 + remainder));
-        }
-        bytes memory s = new bytes(i + 1);
-        for (uint256 j = 0; j <= i; j++) {
-            s[j] = reversed[i - j];
-        }
-        return s;
-    }
-
-    /**
-     * this function is been created just to convert small strings to capital
-     *(private function only used in functions that we want to make the symbol auto capital
-     * in order to concatenate it )
-     */
-
-    function _upperCase(string memory enter)
-        internal
-        pure
-        returns (string memory)
-    {
-        bytes memory strbyte = bytes(enter);
-        for (uint256 i = 0; i < strbyte.length; i++) {
-            if (
-                uint8(strbyte[i]) >= uint8(bytes1("a")) &&
-                uint8(strbyte[i]) <= uint8(bytes1("z"))
-            ) strbyte[i] = bytes1(uint8(strbyte[i]) - 32);
-        }
-        enter = string(strbyte);
-        return enter;
+    function getTotalTokens() public view returns (uint256) {
+        return totalTokens;
     }
 
     function addAcceptedToken(
@@ -255,7 +205,7 @@ contract CollateralizedArt is ERC721, AccessControl {
         string memory acceptedTokenSymbol
     ) public onlyOwner returns (bool) {
         acceptedTokens[acceptedTokenSymbol] = acceptedTokenAddress;
-        acceptedTokensSymbols.push(acceptedTokenSymbol);
+        acceptedTokenSymbols.push(acceptedTokenSymbol);
         return true;
     }
 }

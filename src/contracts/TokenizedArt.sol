@@ -4,9 +4,19 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
-contract CifiPowa is ERC721, AccessControl {
+contract TokenizedArt is ERC721, AccessControl {
     using SafeMath for uint256;
+
+    ERC20 cifiTokenContractTest =
+        ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
+    uint256 FEE = 100;
+    uint8 cifiDecimals = cifiTokenContract.decimals();
+    uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
+
+    address feeWallet = address(0x000000000000000000000000);
 
     string public Artname;
     string public Artsymbol;
@@ -24,21 +34,28 @@ contract CifiPowa is ERC721, AccessControl {
     // Metadata is a URL that points to a json dictionary
     mapping(uint256 => string) tokenIdToMetadata;
 
+    mapping(uint256 => string) tokenID_symbol;
+    mapping(uint256 => uint256) tokenID_amount;
+
+    mapping(string => address) acceptedTokens;
+
+    string[] public acceptedTokenSymbols;
+
     event MetadataAssigned(
         address indexed _owner,
         uint256 _tokenId,
         string _url
     );
-    event Mint(string url, uint256 tokenId);
+    event Mint(string url, uint256 tokenId, string symbol, uint256 amount);
 
     /**
      * a gallery function that is been called by the ART gallery smart contract
      */
 
-    constructor() ERC721("Cifipowa", "POWA") {
-        Artname = "Cifipowa";
-        Artsymbol = "POWA";
-        Artdescription = "initial Cifipowa";
+    constructor() ERC721("TokenizedArt", "cPOWA") {
+        Artname = "TokenizedArt";
+        Artsymbol = "cPOWA";
+        Artdescription = "TokenizedArt";
         Arturi = "we can just add url of metadata here";
         Artcreator = _msgSender();
         totalTokens = 0;
@@ -57,7 +74,7 @@ contract CifiPowa is ERC721, AccessControl {
         _url = abi.encodePacked(_url, bytes(".json"));
 
         tokenIdToMetadata[id] = string(_url);
-        MetadataAssigned(ownerOf(id), id, string(_url));
+        emit MetadataAssigned(ownerOf(id), id, string(_url));
     }
 
     /**
@@ -147,7 +164,11 @@ contract CifiPowa is ERC721, AccessControl {
     /**
      * this function allows to mint more of your ART
      */
-    function mint(string memory url) public {
+    function mint(
+        string memory url,
+        string memory tokenSymbol,
+        uint256 amount
+    ) public {
         uint256 currentTokenCount = totalSupply().add(1);
         // The index of the newest token is at the # totalTokens.
         _mint(msg.sender, currentTokenCount);
@@ -157,13 +178,30 @@ contract CifiPowa is ERC721, AccessControl {
         ownedTokens[msg.sender] = ids;
         // _mint() call adds 1 to total tokens, but we want the token at index - 1
         tokenIdToMetadata[currentTokenCount] = url;
-        emit Mint(url, currentTokenCount);
+
+        ERC20 acceptedToken = ERC20(acceptedTokens[tokenSymbol]);
+        if (acceptedToken != cifiTokenContractTest) {
+            cifiTokenContractTest.transferFrom(
+                msg.sender,
+                feeWallet,
+                feeAmount
+            );
+        }
+        acceptedToken.transferFrom(msg.sender, address(this), feeAmount);
+        tokenID_symbol[currentTokenCount] = tokenSymbol;
+        tokenID_symbol[currentTokenCount] = amount;
+        emit Mint(url, currentTokenCount, tokenSymbol, amount);
     }
 
     /**
      * this function allows you burn your NFT
      */
     function burn(uint256 _id) public returns (bool) {
+        address owner = ownerOf(_id);
+        tokenSymbol = tokenID_symbol[_id];
+        amount = tokenID_amount[_id];
+        ERC20 acceptedToken = ERC20(acceptedTokens[tokenSymbol]);
+        acceptedToken.transferFrom(address(this), owner, amount);
         _burn(_id);
         return true;
     }
@@ -210,5 +248,14 @@ contract CifiPowa is ERC721, AccessControl {
         }
         enter = string(strbyte);
         return enter;
+    }
+
+    function addAcceptedToken(
+        address acceptedTokenAddress,
+        string memory acceptedTokenSymbol
+    ) public onlyOwner returns (bool) {
+        acceptedTokens[acceptedTokenSymbol] = acceptedTokenAddress;
+        acceptedTokenSymbols.push(acceptedTokenSymbol);
+        return true;
     }
 }

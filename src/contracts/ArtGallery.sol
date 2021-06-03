@@ -78,7 +78,14 @@ contract ArtGallery {
         // adding the address to address array for userToGalleries
         userToGalleries[msg.sender].push(address(gallery));
 
-        emit GalleryCreated(name, symbol, description, uri, msg.sender,address(gallery));
+        emit GalleryCreated(
+            name,
+            symbol,
+            description,
+            uri,
+            msg.sender,
+            address(gallery)
+        );
 
         return address(gallery);
     }
