@@ -4,3 +4,4 @@ truffle-config.js
 src/contracts/artifacts
 .env
 yarn.lock
+completed-contracts
