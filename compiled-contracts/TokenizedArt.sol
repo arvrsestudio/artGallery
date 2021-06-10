@@ -1991,6 +1991,73 @@ abstract contract AccessControl is Context {
 
 
 
+
+/**
+ * @dev Contract module which provides a basic access control mechanism, where
+ * there is an account (an owner) that can be granted exclusive access to
+ * specific functions.
+ *
+ * By default, the owner account will be the one that deploys the contract. This
+ * can later be changed with {transferOwnership}.
+ *
+ * This module is used through inheritance. It will make available the modifier
+ * `onlyOwner`, which can be applied to your functions to restrict their use to
+ * the owner.
+ */
+abstract contract Ownable is Context {
+    address private _owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    /**
+     * @dev Initializes the contract setting the deployer as the initial owner.
+     */
+    constructor () internal {
+        address msgSender = _msgSender();
+        _owner = msgSender;
+        emit OwnershipTransferred(address(0), msgSender);
+    }
+
+    /**
+     * @dev Returns the address of the current owner.
+     */
+    function owner() public view virtual returns (address) {
+        return _owner;
+    }
+
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+    modifier onlyOwner() {
+        require(owner() == _msgSender(), "Ownable: caller is not the owner");
+        _;
+    }
+
+    /**
+     * @dev Leaves the contract without owner. It will not be possible to call
+     * `onlyOwner` functions anymore. Can only be called by the current owner.
+     *
+     * NOTE: Renouncing ownership will leave the contract without an owner,
+     * thereby removing any functionality that is only available to the owner.
+     */
+    function renounceOwnership() public virtual onlyOwner {
+        emit OwnershipTransferred(_owner, address(0));
+        _owner = address(0);
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Can only be called by the current owner.
+     */
+    function transferOwnership(address newOwner) public virtual onlyOwner {
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        emit OwnershipTransferred(_owner, newOwner);
+        _owner = newOwner;
+    }
+}\n\n// SPDX-License-Identifier: MIT
+
+
+
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
  */
@@ -2377,13 +2444,14 @@ pragma experimental ABIEncoderV2;
 
 
 
-contract TokenizedArt is ERC721, AccessControl {
+
+contract TokenizedArt is ERC721, AccessControl, Ownable {
     using SafeMath for uint256;
 
     ERC20 cifiTokenContractTest =
         ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
     uint256 FEE = 100;
-    uint8 cifiDecimals = cifiTokenContract.decimals();
+    uint8 cifiDecimals = cifiTokenContractTest.decimals();
     uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
     address feeWallet = address(0x000000000000000000000000);
@@ -2436,7 +2504,7 @@ contract TokenizedArt is ERC721, AccessControl {
      * this function assignes the URI to automatically add the id number at the end of the URI
      */
     function assignDataToToken(uint256 id, string memory uri) public {
-        require(msg.sender == Nftcreator);
+        require(msg.sender == Artcreator);
         bytes memory _url = bytes(uri);
 
         _url = abi.encodePacked(_url, bytes("/"));
@@ -2559,7 +2627,7 @@ contract TokenizedArt is ERC721, AccessControl {
         }
         acceptedToken.transferFrom(msg.sender, address(this), feeAmount);
         tokenID_symbol[currentTokenCount] = tokenSymbol;
-        tokenID_symbol[currentTokenCount] = amount;
+        tokenID_amount[currentTokenCount] = amount;
         emit Mint(url, currentTokenCount, tokenSymbol, amount);
     }
 
@@ -2568,8 +2636,8 @@ contract TokenizedArt is ERC721, AccessControl {
      */
     function burn(uint256 _id) public returns (bool) {
         address owner = ownerOf(_id);
-        tokenSymbol = tokenID_symbol[_id];
-        amount = tokenID_amount[_id];
+        string memory tokenSymbol = tokenID_symbol[_id];
+        uint256 amount = tokenID_amount[_id];
         ERC20 acceptedToken = ERC20(acceptedTokens[tokenSymbol]);
         acceptedToken.transferFrom(address(this), owner, amount);
         _burn(_id);

@@ -2108,315 +2108,64 @@ contract ERC721 is
     ) internal virtual {}
 }
 
-/**
- * @dev Contract module that allows children to implement role-based access
- * control mechanisms.
- *
- * Roles are referred to by their `bytes32` identifier. These should be exposed
- * in the external API and be unique. The best way to achieve this is by
- * using `public constant` hash digests:
- *
- * ```
- * bytes32 public constant MY_ROLE = keccak256("MY_ROLE");
- * ```
- *
- * Roles can be used to represent a set of permissions. To restrict access to a
- * function call, use {hasRole}:
- *
- * ```
- * function foo() public {
- *     require(hasRole(MY_ROLE, msg.sender));
- *     ...
- * }
- * ```
- *
- * Roles can be granted and revoked dynamically via the {grantRole} and
- * {revokeRole} functions. Each role has an associated admin role, and only
- * accounts that have a role's admin role can call {grantRole} and {revokeRole}.
- *
- * By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means
- * that only accounts with this role will be able to grant or revoke other
- * roles. More complex role relationships can be created by using
- * {_setRoleAdmin}.
- *
- * WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to
- * grant and revoke this role. Extra precautions should be taken to secure
- * accounts that have been granted it.
- */
-abstract contract AccessControl is Context {
-    using EnumerableSet for EnumerableSet.AddressSet;
-    using Address for address;
+contract Governance {
+    address public _governance;
 
-    struct RoleData {
-        EnumerableSet.AddressSet members;
-        bytes32 adminRole;
+    constructor() {
+        _governance = tx.origin;
     }
 
-    mapping(bytes32 => RoleData) private _roles;
-
-    bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
-
-    /**
-     * @dev Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole`
-     *
-     * `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite
-     * {RoleAdminChanged} not being emitted signaling this.
-     *
-     * _Available since v3.1._
-     */
-    event RoleAdminChanged(
-        bytes32 indexed role,
-        bytes32 indexed previousAdminRole,
-        bytes32 indexed newAdminRole
+    event GovernanceTransferred(
+        address indexed previousOwner,
+        address indexed newOwner
     );
 
-    /**
-     * @dev Emitted when `account` is granted `role`.
-     *
-     * `sender` is the account that originated the contract call, an admin role
-     * bearer except when using {_setupRole}.
-     */
-    event RoleGranted(
-        bytes32 indexed role,
-        address indexed account,
-        address indexed sender
-    );
-
-    /**
-     * @dev Emitted when `account` is revoked `role`.
-     *
-     * `sender` is the account that originated the contract call:
-     *   - if using `revokeRole`, it is the admin role bearer
-     *   - if using `renounceRole`, it is the role bearer (i.e. `account`)
-     */
-    event RoleRevoked(
-        bytes32 indexed role,
-        address indexed account,
-        address indexed sender
-    );
-
-    /**
-     * @dev Returns `true` if `account` has been granted `role`.
-     */
-    function hasRole(bytes32 role, address account) public view returns (bool) {
-        return _roles[role].members.contains(account);
+    modifier onlyGovernance {
+        require(msg.sender == _governance, "not governance");
+        _;
     }
 
-    /**
-     * @dev Returns the number of accounts that have `role`. Can be used
-     * together with {getRoleMember} to enumerate all bearers of a role.
-     */
-    function getRoleMemberCount(bytes32 role) public view returns (uint256) {
-        return _roles[role].members.length();
-    }
-
-    /**
-     * @dev Returns one of the accounts that have `role`. `index` must be a
-     * value between 0 and {getRoleMemberCount}, non-inclusive.
-     *
-     * Role bearers are not sorted in any particular way, and their ordering may
-     * change at any point.
-     *
-     * WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure
-     * you perform all queries on the same block. See the following
-     * https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post]
-     * for more information.
-     */
-    function getRoleMember(bytes32 role, uint256 index)
-        public
-        view
-        returns (address)
-    {
-        return _roles[role].members.at(index);
-    }
-
-    /**
-     * @dev Returns the admin role that controls `role`. See {grantRole} and
-     * {revokeRole}.
-     *
-     * To change a role's admin, use {_setRoleAdmin}.
-     */
-    function getRoleAdmin(bytes32 role) public view returns (bytes32) {
-        return _roles[role].adminRole;
-    }
-
-    /**
-     * @dev Grants `role` to `account`.
-     *
-     * If `account` had not been already granted `role`, emits a {RoleGranted}
-     * event.
-     *
-     * Requirements:
-     *
-     * - the caller must have ``role``'s admin role.
-     */
-    function grantRole(bytes32 role, address account) public virtual {
-        require(
-            hasRole(_roles[role].adminRole, _msgSender()),
-            "AccessControl: sender must be an admin to grant"
-        );
-
-        _grantRole(role, account);
-    }
-
-    /**
-     * @dev Revokes `role` from `account`.
-     *
-     * If `account` had been granted `role`, emits a {RoleRevoked} event.
-     *
-     * Requirements:
-     *
-     * - the caller must have ``role``'s admin role.
-     */
-    function revokeRole(bytes32 role, address account) public virtual {
-        require(
-            hasRole(_roles[role].adminRole, _msgSender()),
-            "AccessControl: sender must be an admin to revoke"
-        );
-
-        _revokeRole(role, account);
-    }
-
-    /**
-     * @dev Revokes `role` from the calling account.
-     *
-     * Roles are often managed via {grantRole} and {revokeRole}: this function's
-     * purpose is to provide a mechanism for accounts to lose their privileges
-     * if they are compromised (such as when a trusted device is misplaced).
-     *
-     * If the calling account had been granted `role`, emits a {RoleRevoked}
-     * event.
-     *
-     * Requirements:
-     *
-     * - the caller must be `account`.
-     */
-    function renounceRole(bytes32 role, address account) public virtual {
-        require(
-            account == _msgSender(),
-            "AccessControl: can only renounce roles for self"
-        );
-
-        _revokeRole(role, account);
-    }
-
-    /**
-     * @dev Grants `role` to `account`.
-     *
-     * If `account` had not been already granted `role`, emits a {RoleGranted}
-     * event. Note that unlike {grantRole}, this function doesn't perform any
-     * checks on the calling account.
-     *
-     * [WARNING]
-     * ====
-     * This function should only be called from the constructor when setting
-     * up the initial roles for the system.
-     *
-     * Using this function in any other way is effectively circumventing the admin
-     * system imposed by {AccessControl}.
-     * ====
-     */
-    function _setupRole(bytes32 role, address account) internal virtual {
-        _grantRole(role, account);
-    }
-
-    /**
-     * @dev Sets `adminRole` as ``role``'s admin role.
-     *
-     * Emits a {RoleAdminChanged} event.
-     */
-    function _setRoleAdmin(bytes32 role, bytes32 adminRole) internal virtual {
-        emit RoleAdminChanged(role, _roles[role].adminRole, adminRole);
-        _roles[role].adminRole = adminRole;
-    }
-
-    function _grantRole(bytes32 role, address account) private {
-        if (_roles[role].members.add(account)) {
-            emit RoleGranted(role, account, _msgSender());
-        }
-    }
-
-    function _revokeRole(bytes32 role, address account) private {
-        if (_roles[role].members.remove(account)) {
-            emit RoleRevoked(role, account, _msgSender());
-        }
+    function setGovernance(address governance) public onlyGovernance {
+        require(governance != address(0), "new governance the zero address");
+        emit GovernanceTransferred(_governance, governance);
+        _governance = governance;
     }
 }
 
-pragma experimental ABIEncoderV2;
-
-contract CifiPowa is ERC721, AccessControl {
+contract CifiPowa is ERC721, Governance {
     using SafeMath for uint256;
 
-    string public Artname;
-    string public Artsymbol;
-    string public Artdescription;
-    string public Arturi;
-    // Total tokens starts at 0 because each new token must be minted and the
-    // _mint() call adds 1 to totalTokens
-    uint256 totalTokens = 0;
-
-    address public Artcreator;
-
-    // Mapping from owner to list of owned token IDs
-    mapping(address => uint256[]) ownedTokens;
-
-    // Metadata is a URL that points to a json dictionary
-    mapping(uint256 => string) tokenIdToMetadata;
-
-    event MetadataAssigned(
-        address indexed _owner,
-        uint256 _tokenId,
-        string _url
-    );
-    event Mint(string url, uint256 tokenId);
-
-    /**
-     * a gallery function that is been called by the ART gallery smart contract
-     */
-
     constructor() ERC721("Cifipowa", "POWA") {
-        Artname = "Cifipowa";
-        Artsymbol = "POWA";
-        Artdescription = "initial Cifipowa";
-        Arturi = "we can just add url of metadata here";
-        Artcreator = _msgSender();
-        totalTokens = 0;
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        _setBaseURI("https://ipfs.io/ipfs/");
+    }
+
+    function setURIPrefix(string memory baseURI) public onlyGovernance {
+        _setBaseURI(baseURI);
     }
 
     /**
      * this function assignes the URI to automatically add the id number at the end of the URI
      */
     function assignDataToToken(uint256 id, string memory uri) public {
-        require(msg.sender == Nftcreator);
-        bytes memory _url = bytes(uri);
-
-        _url = abi.encodePacked(_url, bytes("/"));
-        _url = abi.encodePacked(_url, _uintToBytes(id));
-        _url = abi.encodePacked(_url, bytes(".json"));
-
-        tokenIdToMetadata[id] = string(_url);
-        MetadataAssigned(ownerOf(id), id, string(_url));
-    }
-
-    /**
-     * this function helps with queries to Fetch the metadata for a givine token id
-     */
-    function getMetadataAtID(uint256 _tokenId)
-        public
-        view
-        returns (string memory)
-    {
-        return tokenIdToMetadata[_tokenId];
+        require(_msgSender() == ownerOf(id), "invalid token owner");
+        _setTokenURI(id, uri);
     }
 
     /**
      * this function helps with queries to Fetch all the tokens that the address owns by givine address
      */
-    function tokensOf(address _owner) public view returns (uint256[] memory) {
-        require(_owner != address(0), "invalid owner");
-        return ownedTokens[_owner];
+    function tokensOfOwner(address owner)
+        public
+        view
+        returns (uint256[] memory)
+    {
+        require(owner != address(0), "invalid owner");
+        uint256 length = balanceOf(owner);
+        uint256[] memory tokens = new uint256[](length);
+        for (uint256 i = 0; i < length; i++) {
+            tokens[i] = tokenOfOwnerByIndex(owner, i);
+        }
+        return tokens;
     }
 
     /**
@@ -2436,119 +2185,31 @@ contract CifiPowa is ERC721, AccessControl {
      * this function allows to approve all the tokens the address owns at once
      */
     function approveAll(address _to) public {
-        uint256[] memory tokens = tokensOf(msg.sender);
+        uint256[] memory tokens = tokensOfOwner(msg.sender);
         for (uint256 t = 0; t < tokens.length; t++) {
             approve(_to, tokens[t]);
         }
     }
 
     /**
-     * this overload function allows to transfer tokens and updates all the mapping queries(without filling the URI)
-     */
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId
-    ) public virtual override {
-        require(from != address(0), "invalid address");
-        require(to != address(0), "invalid address");
-        // add require to make sure that the tokenid exsistes
-        safeTransferFrom(from, to, tokenId, "");
-    }
-
-    /**
-     * this overload function allows to transfer tokens and updates all the mapping queries(with filling the URI)
-     */
-    function safeTransferFrom(
-        address from,
-        address to,
-        uint256 tokenId,
-        bytes memory _data
-    ) public virtual override {
-        require(
-            _isApprovedOrOwner(_msgSender(), tokenId),
-            "ERC721: transfer caller is not owner nor approved"
-        );
-        require(from != address(0), "invalid address");
-        require(to != address(0), "invalid address");
-        _safeTransfer(from, to, tokenId, _data);
-        uint256[] memory fromIds = ownedTokens[from];
-        uint256[] memory newFromIds = new uint256[](fromIds.length - 1);
-        uint256[] storage toIds = ownedTokens[to];
-        toIds.push(tokenId);
-        ownedTokens[to] = toIds;
-        uint256 j = 0;
-        for (uint256 i = 0; i < fromIds.length; i++) {
-            if (fromIds[i] != tokenId) newFromIds[j++] = (fromIds[i]);
-        }
-        ownedTokens[from] = newFromIds;
-    }
-
-    /**
      * this function allows to mint more of your ART
      */
-    function mint(string memory url) public {
+    function mint(string memory metadata) external returns (bool) {
         uint256 currentTokenCount = totalSupply().add(1);
         // The index of the newest token is at the # totalTokens.
         _mint(msg.sender, currentTokenCount);
-        // assign address to array of owned tokens aned you can qury what ids the address owns
-        uint256[] storage ids = ownedTokens[msg.sender];
-        ids.push(currentTokenCount);
-        ownedTokens[msg.sender] = ids;
-        // _mint() call adds 1 to total tokens, but we want the token at index - 1
-        tokenIdToMetadata[currentTokenCount] = url;
-        emit Mint(url, currentTokenCount);
+        _setTokenURI(currentTokenCount, metadata);
+        return true;
     }
 
     /**
      * this function allows you burn your NFT
      */
-    function burn(uint256 _id) public returns (bool) {
+    function burn(uint256 _id) external {
+        require(
+            _isApprovedOrOwner(_msgSender(), _id),
+            "caller is not owner nor approved"
+        );
         _burn(_id);
-        return true;
-    }
-
-    /**
-     * this function is been created just to convert uint variable to bytes
-     *(private function only used in the "assignDataToToken" function in order to convert the uint variable to bytes
-     * in order to concatenate it )
-     */
-    function _uintToBytes(uint256 _int) internal pure returns (bytes memory) {
-        uint256 maxlength = 100;
-        bytes memory reversed = new bytes(maxlength);
-        uint256 i = 0;
-        if (_int == 0) return bytes("0");
-        while (_int != 0) {
-            uint256 remainder = _int % 10;
-            _int = _int / 10;
-            reversed[i++] = bytes1(uint8(48 + remainder));
-        }
-        bytes memory s = new bytes(i + 1);
-        for (uint256 j = 0; j <= i; j++) {
-            s[j] = reversed[i - j];
-        }
-        return s;
-    }
-
-    /**
-     * this function is been created just to convert small strings to capital
-     *(private function only used in functions that we want to make the symbol auto capital
-     * in order to concatenate it )
-     */
-
-    function _upperCase(string memory enter)
-        internal
-        pure
-        returns (string memory)
-    {
-        bytes memory strbyte = bytes(enter);
-        for (uint256 i = 0; i < strbyte.length; i++) {
-            if (
-                uint8(strbyte[i]) >= uint8(bytes1("a")) &&
-                uint8(strbyte[i]) <= uint8(bytes1("z"))
-            ) strbyte[i] = bytes1(uint8(strbyte[i]) - 32);
-        }
-        enter = string(strbyte);
-        return enter;
     }
 }

@@ -2,14 +2,16 @@
 pragma solidity >=0.4.22 <0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract TokenizedArtFactory is ERC721 {
+contract TokenizedArtFactory is ERC721, Ownable {
     using SafeMath for uint256;
 
     ERC20 cifiTokenContractTest =
         ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
     uint256 FEE = 100;
-    uint8 cifiDecimals = cifiTokenContract.decimals();
+    uint8 cifiDecimals = cifiTokenContractTest.decimals();
     uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
     address feeWallet = address(0x000000000000000000000000);
@@ -164,8 +166,8 @@ contract TokenizedArtFactory is ERC721 {
             );
         }
         acceptedToken.transferFrom(msg.sender, address(this), feeAmount);
-        tokenID_symbol[currentTokenCount] = tokenSymbol;
-        tokenID_symbol[currentTokenCount] = amount;
+        tokenID_symbol[totalTokens] = tokenSymbol;
+        tokenID_amount[totalTokens] = amount;
 
         emit Mint(url, totalTokens, tokenSymbol, amount);
     }
@@ -188,8 +190,8 @@ contract TokenizedArtFactory is ERC721 {
      */
     function burn(uint256 _id) public returns (bool) {
         address owner = ownerOf(_id);
-        tokenSymbol = tokenID_symbol[_id];
-        amount = tokenID_amount[_id];
+        string memory tokenSymbol = tokenID_symbol[_id];
+        uint256 amount = tokenID_amount[_id];
         ERC20 acceptedToken = ERC20(acceptedTokens[tokenSymbol]);
         acceptedToken.transferFrom(address(this), owner, amount);
         _burn(_id);

@@ -4,16 +4,17 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
-contract TokenizedArt is ERC721, AccessControl {
+contract TokenizedArt is ERC721, AccessControl, Ownable {
     using SafeMath for uint256;
 
     ERC20 cifiTokenContractTest =
         ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
     uint256 FEE = 100;
-    uint8 cifiDecimals = cifiTokenContract.decimals();
+    uint8 cifiDecimals = cifiTokenContractTest.decimals();
     uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
     address feeWallet = address(0x000000000000000000000000);
@@ -66,7 +67,7 @@ contract TokenizedArt is ERC721, AccessControl {
      * this function assignes the URI to automatically add the id number at the end of the URI
      */
     function assignDataToToken(uint256 id, string memory uri) public {
-        require(msg.sender == Nftcreator);
+        require(msg.sender == Artcreator);
         bytes memory _url = bytes(uri);
 
         _url = abi.encodePacked(_url, bytes("/"));
@@ -189,7 +190,7 @@ contract TokenizedArt is ERC721, AccessControl {
         }
         acceptedToken.transferFrom(msg.sender, address(this), feeAmount);
         tokenID_symbol[currentTokenCount] = tokenSymbol;
-        tokenID_symbol[currentTokenCount] = amount;
+        tokenID_amount[currentTokenCount] = amount;
         emit Mint(url, currentTokenCount, tokenSymbol, amount);
     }
 
@@ -198,8 +199,8 @@ contract TokenizedArt is ERC721, AccessControl {
      */
     function burn(uint256 _id) public returns (bool) {
         address owner = ownerOf(_id);
-        tokenSymbol = tokenID_symbol[_id];
-        amount = tokenID_amount[_id];
+        string memory tokenSymbol = tokenID_symbol[_id];
+        uint256 amount = tokenID_amount[_id];
         ERC20 acceptedToken = ERC20(acceptedTokens[tokenSymbol]);
         acceptedToken.transferFrom(address(this), owner, amount);
         _burn(_id);
