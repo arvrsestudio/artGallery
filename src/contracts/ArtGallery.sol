@@ -7,8 +7,6 @@ contract ArtGallery {
     using SafeMath for uint256;
     // mapping to save the symbol to Gallery Address
     mapping(string => address) symbolToGalleryAddress;
-    // mapping to save the Uri to Gallery Address
-    mapping(string => address) uriToGalleryAddress;
     //mapping to save all the gallery addresses of an owner
     mapping(address => address[]) userToGalleries;
 
@@ -39,7 +37,6 @@ contract ArtGallery {
         string name,
         string symbol,
         string description,
-        string uri,
         address caller,
         address galleryAddress
     );
@@ -47,9 +44,7 @@ contract ArtGallery {
     function createGallery(
         string memory name,
         string memory symbol,
-        string memory description,
-        string memory uri,
-        bool isPrivate
+        string memory description
     ) public returns (address) {
         require(msg.sender != address(0), "Invalid address");
         require(bytes(name).length != 0, "name can't be empty");
@@ -57,14 +52,7 @@ contract ArtGallery {
         uniqueSymbol(symbol);
         cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
         ArtFactory gallery =
-            new ArtFactory(
-                name,
-                symbol,
-                description,
-                uri,
-                msg.sender,
-                isPrivate
-            );
+            new ArtFactory(name, symbol, description, msg.sender);
 
         // adding the gallery address to the symbolToGalleryAddress
         symbolToGalleryAddress[symbol] = address(gallery);
@@ -73,7 +61,6 @@ contract ArtGallery {
         lastaddress = address(gallery);
 
         // adding the gallery address to the uriToGalleryAddress
-        uriToGalleryAddress[uri] = address(gallery);
 
         // adding the address to address array for userToGalleries
         userToGalleries[msg.sender].push(address(gallery));
@@ -82,7 +69,6 @@ contract ArtGallery {
             name,
             symbol,
             description,
-            uri,
             msg.sender,
             address(gallery)
         );
@@ -100,14 +86,6 @@ contract ArtGallery {
 
     function getlastAddress() public view returns (address) {
         return lastaddress;
-    }
-
-    function getGalleryAddressFromUri(string memory uri)
-        public
-        view
-        returns (address)
-    {
-        return uriToGalleryAddress[uri];
     }
 
     function getGalleries(address _user)
