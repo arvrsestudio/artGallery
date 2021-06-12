@@ -17,7 +17,7 @@ contract ArtFactory is ERC721 {
     event Mint(string url, uint256 tokenId);
 
     /**
-     * a registry function that iis been called by the NFT registry smart contract
+     * a gallery function that is been called by the ART gallery smart contract
      */
 
     constructor(
@@ -29,7 +29,7 @@ contract ArtFactory is ERC721 {
         Artname = _name;
         Artsymbol = _symbol;
         Artdescription = _description;
-        Artcreater = creater;
+        Artcreator = creator;
         _setBaseURI("https://ipfs.io/ipfs/");
     }
 
