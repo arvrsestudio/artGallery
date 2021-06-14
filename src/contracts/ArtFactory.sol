@@ -29,7 +29,7 @@ contract ArtFactory is ERC721 {
         Artname = _name;
         Artsymbol = _symbol;
         Artdescription = _description;
-        Artcreator = creator;
+        Artcreater = creater;
         _setBaseURI("https://ipfs.io/ipfs/");
     }
 

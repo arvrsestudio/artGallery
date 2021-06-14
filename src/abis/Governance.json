@@ -66,15 +66,15 @@
     "absolutePath": "/F/MyWork/LianHe/Citizen/ArtGallery/src/contracts/library/Governance.sol",
     "exportedSymbols": {
       "Governance": [
-        504
+        352
       ]
     },
-    "id": 505,
+    "id": 353,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 447,
+        "id": 295,
         "literals": [
           "solidity",
           ">=",
@@ -93,9 +93,9 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 504,
+        "id": 352,
         "linearizedBaseContracts": [
-          504
+          352
         ],
         "name": "Governance",
         "nodeType": "ContractDefinition",
@@ -103,11 +103,11 @@
           {
             "constant": false,
             "functionSelector": "1c2f3e3d",
-            "id": 449,
+            "id": 297,
             "mutability": "mutable",
             "name": "_governance",
             "nodeType": "VariableDeclaration",
-            "scope": 504,
+            "scope": 352,
             "src": "96:26:1",
             "stateVariable": true,
             "storageLocation": "default",
@@ -116,7 +116,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 448,
+              "id": 296,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "96:7:1",
@@ -130,23 +130,23 @@
           },
           {
             "body": {
-              "id": 457,
+              "id": 305,
               "nodeType": "Block",
               "src": "145:42:1",
               "statements": [
                 {
                   "expression": {
-                    "id": 455,
+                    "id": 303,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 452,
+                      "id": 300,
                       "name": "_governance",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 449,
+                      "referencedDeclaration": 297,
                       "src": "156:11:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -157,7 +157,7 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 453,
+                        "id": 301,
                         "name": "tx",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -168,7 +168,7 @@
                           "typeString": "tx"
                         }
                       },
-                      "id": 454,
+                      "id": 302,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -187,31 +187,31 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 456,
+                  "id": 304,
                   "nodeType": "ExpressionStatement",
                   "src": "156:23:1"
                 }
               ]
             },
-            "id": 458,
+            "id": 306,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 450,
+              "id": 298,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "142:2:1"
             },
             "returnParameters": {
-              "id": 451,
+              "id": 299,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "145:0:1"
             },
-            "scope": 504,
+            "scope": 352,
             "src": "131:56:1",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -219,21 +219,21 @@
           },
           {
             "anonymous": false,
-            "id": 464,
+            "id": 312,
             "name": "GovernanceTransferred",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 463,
+              "id": 311,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 460,
+                  "id": 308,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "previousOwner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 464,
+                  "scope": 312,
                   "src": "233:29:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -242,7 +242,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 459,
+                    "id": 307,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "233:7:1",
@@ -256,12 +256,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 462,
+                  "id": 310,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "newOwner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 464,
+                  "scope": 312,
                   "src": "273:24:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -270,7 +270,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 461,
+                    "id": 309,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "273:7:1",
@@ -289,7 +289,7 @@
           },
           {
             "body": {
-              "id": 475,
+              "id": 323,
               "nodeType": "Block",
               "src": "337:83:1",
               "statements": [
@@ -301,14 +301,14 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 470,
+                        "id": 318,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "expression": {
-                            "id": 467,
+                            "id": 315,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -319,7 +319,7 @@
                               "typeString": "msg"
                             }
                           },
-                          "id": 468,
+                          "id": 316,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -335,11 +335,11 @@
                         "nodeType": "BinaryOperation",
                         "operator": "==",
                         "rightExpression": {
-                          "id": 469,
+                          "id": 317,
                           "name": "_governance",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 449,
+                          "referencedDeclaration": 297,
                           "src": "370:11:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -354,7 +354,7 @@
                       },
                       {
                         "hexValue": "6e6f7420676f7665726e616e6365",
-                        "id": 471,
+                        "id": 319,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -380,7 +380,7 @@
                           "typeString": "literal_string \"not governance\""
                         }
                       ],
-                      "id": 466,
+                      "id": 314,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -394,7 +394,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 472,
+                    "id": 320,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -409,22 +409,22 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 473,
+                  "id": 321,
                   "nodeType": "ExpressionStatement",
                   "src": "348:52:1"
                 },
                 {
-                  "id": 474,
+                  "id": 322,
                   "nodeType": "PlaceholderStatement",
                   "src": "411:1:1"
                 }
               ]
             },
-            "id": 476,
+            "id": 324,
             "name": "onlyGovernance",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 465,
+              "id": 313,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "337:0:1"
@@ -435,7 +435,7 @@
           },
           {
             "body": {
-              "id": 502,
+              "id": 350,
               "nodeType": "Block",
               "src": "493:184:1",
               "statements": [
@@ -447,17 +447,17 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 489,
+                        "id": 337,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 484,
+                          "id": 332,
                           "name": "governance",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 478,
+                          "referencedDeclaration": 326,
                           "src": "512:10:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -470,7 +470,7 @@
                           "arguments": [
                             {
                               "hexValue": "30",
-                              "id": 487,
+                              "id": 335,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -492,7 +492,7 @@
                                 "typeString": "int_const 0"
                               }
                             ],
-                            "id": 486,
+                            "id": 334,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -504,14 +504,14 @@
                               "typeString": "type(address)"
                             },
                             "typeName": {
-                              "id": 485,
+                              "id": 333,
                               "name": "address",
                               "nodeType": "ElementaryTypeName",
                               "src": "526:7:1",
                               "typeDescriptions": {}
                             }
                           },
-                          "id": 488,
+                          "id": 336,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -534,7 +534,7 @@
                       },
                       {
                         "hexValue": "6e657720676f7665726e616e636520746865207a65726f2061646472657373",
-                        "id": 490,
+                        "id": 338,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -560,7 +560,7 @@
                           "typeString": "literal_string \"new governance the zero address\""
                         }
                       ],
-                      "id": 483,
+                      "id": 331,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -574,7 +574,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 491,
+                    "id": 339,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -589,7 +589,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 492,
+                  "id": 340,
                   "nodeType": "ExpressionStatement",
                   "src": "504:68:1"
                 },
@@ -597,11 +597,11 @@
                   "eventCall": {
                     "arguments": [
                       {
-                        "id": 494,
+                        "id": 342,
                         "name": "_governance",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 449,
+                        "referencedDeclaration": 297,
                         "src": "610:11:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -609,11 +609,11 @@
                         }
                       },
                       {
-                        "id": 495,
+                        "id": 343,
                         "name": "governance",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 478,
+                        "referencedDeclaration": 326,
                         "src": "623:10:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -632,18 +632,18 @@
                           "typeString": "address"
                         }
                       ],
-                      "id": 493,
+                      "id": 341,
                       "name": "GovernanceTransferred",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 464,
+                      "referencedDeclaration": 312,
                       "src": "588:21:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_address_$returns$__$",
                         "typeString": "function (address,address)"
                       }
                     },
-                    "id": 496,
+                    "id": 344,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -658,23 +658,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 497,
+                  "id": 345,
                   "nodeType": "EmitStatement",
                   "src": "583:51:1"
                 },
                 {
                   "expression": {
-                    "id": 500,
+                    "id": 348,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 498,
+                      "id": 346,
                       "name": "_governance",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 449,
+                      "referencedDeclaration": 297,
                       "src": "645:11:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -684,11 +684,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 499,
+                      "id": 347,
                       "name": "governance",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 478,
+                      "referencedDeclaration": 326,
                       "src": "659:10:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -701,25 +701,25 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 501,
+                  "id": 349,
                   "nodeType": "ExpressionStatement",
                   "src": "645:24:1"
                 }
               ]
             },
             "functionSelector": "ab033ea9",
-            "id": 503,
+            "id": 351,
             "implemented": true,
             "kind": "function",
             "modifiers": [
               {
-                "id": 481,
+                "id": 329,
                 "modifierName": {
-                  "id": 480,
+                  "id": 328,
                   "name": "onlyGovernance",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 476,
+                  "referencedDeclaration": 324,
                   "src": "478:14:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -733,16 +733,16 @@
             "name": "setGovernance",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 479,
+              "id": 327,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 478,
+                  "id": 326,
                   "mutability": "mutable",
                   "name": "governance",
                   "nodeType": "VariableDeclaration",
-                  "scope": 503,
+                  "scope": 351,
                   "src": "451:18:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -751,7 +751,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 477,
+                    "id": 325,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "451:7:1",
@@ -767,19 +767,19 @@
               "src": "450:20:1"
             },
             "returnParameters": {
-              "id": 482,
+              "id": 330,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "493:0:1"
             },
-            "scope": 504,
+            "scope": 352,
             "src": "428:249:1",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 505,
+        "scope": 353,
         "src": "69:611:1"
       }
     ],
@@ -790,7 +790,7 @@
       "absolutePath": "/F/MyWork/LianHe/Citizen/ArtGallery/src/contracts/library/Governance.sol",
       "exportedSymbols": {
         "Governance": [
-          504
+          352
         ]
       },
       "license": "MIT"
@@ -808,7 +808,7 @@
             ".4"
           ]
         },
-        "id": 447,
+        "id": 295,
         "name": "PragmaDirective",
         "src": "33:32:1"
       },
@@ -824,10 +824,10 @@
           "contractKind": "contract",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            504
+            352
           ],
           "name": "Governance",
-          "scope": 505
+          "scope": 353
         },
         "children": [
           {
@@ -836,7 +836,7 @@
               "functionSelector": "1c2f3e3d",
               "mutability": "mutable",
               "name": "_governance",
-              "scope": 504,
+              "scope": 352,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "address",
@@ -849,12 +849,12 @@
                   "stateMutability": "nonpayable",
                   "type": "address"
                 },
-                "id": 448,
+                "id": 296,
                 "name": "ElementaryTypeName",
                 "src": "96:7:1"
               }
             ],
-            "id": 449,
+            "id": 297,
             "name": "VariableDeclaration",
             "src": "96:26:1"
           },
@@ -867,7 +867,7 @@
                 null
               ],
               "name": "",
-              "scope": 504,
+              "scope": 352,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "public"
@@ -880,7 +880,7 @@
                   ]
                 },
                 "children": [],
-                "id": 450,
+                "id": 298,
                 "name": "ParameterList",
                 "src": "142:2:1"
               },
@@ -891,7 +891,7 @@
                   ]
                 },
                 "children": [],
-                "id": 451,
+                "id": 299,
                 "name": "ParameterList",
                 "src": "145:0:1"
               },
@@ -914,11 +914,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 449,
+                              "referencedDeclaration": 297,
                               "type": "address",
                               "value": "_governance"
                             },
-                            "id": 452,
+                            "id": 300,
                             "name": "Identifier",
                             "src": "156:11:1"
                           },
@@ -941,32 +941,32 @@
                                   "type": "tx",
                                   "value": "tx"
                                 },
-                                "id": 453,
+                                "id": 301,
                                 "name": "Identifier",
                                 "src": "170:2:1"
                               }
                             ],
-                            "id": 454,
+                            "id": 302,
                             "name": "MemberAccess",
                             "src": "170:9:1"
                           }
                         ],
-                        "id": 455,
+                        "id": 303,
                         "name": "Assignment",
                         "src": "156:23:1"
                       }
                     ],
-                    "id": 456,
+                    "id": 304,
                     "name": "ExpressionStatement",
                     "src": "156:23:1"
                   }
                 ],
-                "id": 457,
+                "id": 305,
                 "name": "Block",
                 "src": "145:42:1"
               }
             ],
-            "id": 458,
+            "id": 306,
             "name": "FunctionDefinition",
             "src": "131:56:1"
           },
@@ -984,7 +984,7 @@
                       "indexed": true,
                       "mutability": "mutable",
                       "name": "previousOwner",
-                      "scope": 464,
+                      "scope": 312,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -997,12 +997,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 459,
+                        "id": 307,
                         "name": "ElementaryTypeName",
                         "src": "233:7:1"
                       }
                     ],
-                    "id": 460,
+                    "id": 308,
                     "name": "VariableDeclaration",
                     "src": "233:29:1"
                   },
@@ -1012,7 +1012,7 @@
                       "indexed": true,
                       "mutability": "mutable",
                       "name": "newOwner",
-                      "scope": 464,
+                      "scope": 312,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1025,22 +1025,22 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 461,
+                        "id": 309,
                         "name": "ElementaryTypeName",
                         "src": "273:7:1"
                       }
                     ],
-                    "id": 462,
+                    "id": 310,
                     "name": "VariableDeclaration",
                     "src": "273:24:1"
                   }
                 ],
-                "id": 463,
+                "id": 311,
                 "name": "ParameterList",
                 "src": "222:82:1"
               }
             ],
-            "id": 464,
+            "id": 312,
             "name": "EventDefinition",
             "src": "195:110:1"
           },
@@ -1058,7 +1058,7 @@
                   ]
                 },
                 "children": [],
-                "id": 465,
+                "id": 313,
                 "name": "ParameterList",
                 "src": "337:0:1"
               },
@@ -1101,7 +1101,7 @@
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
-                            "id": 466,
+                            "id": 314,
                             "name": "Identifier",
                             "src": "348:7:1"
                           },
@@ -1138,12 +1138,12 @@
                                       "type": "msg",
                                       "value": "msg"
                                     },
-                                    "id": 467,
+                                    "id": 315,
                                     "name": "Identifier",
                                     "src": "356:3:1"
                                   }
                                 ],
-                                "id": 468,
+                                "id": 316,
                                 "name": "MemberAccess",
                                 "src": "356:10:1"
                               },
@@ -1152,16 +1152,16 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 449,
+                                  "referencedDeclaration": 297,
                                   "type": "address",
                                   "value": "_governance"
                                 },
-                                "id": 469,
+                                "id": 317,
                                 "name": "Identifier",
                                 "src": "370:11:1"
                               }
                             ],
-                            "id": 470,
+                            "id": 318,
                             "name": "BinaryOperation",
                             "src": "356:25:1"
                           },
@@ -1176,32 +1176,32 @@
                               "type": "literal_string \"not governance\"",
                               "value": "not governance"
                             },
-                            "id": 471,
+                            "id": 319,
                             "name": "Literal",
                             "src": "383:16:1"
                           }
                         ],
-                        "id": 472,
+                        "id": 320,
                         "name": "FunctionCall",
                         "src": "348:52:1"
                       }
                     ],
-                    "id": 473,
+                    "id": 321,
                     "name": "ExpressionStatement",
                     "src": "348:52:1"
                   },
                   {
-                    "id": 474,
+                    "id": 322,
                     "name": "PlaceholderStatement",
                     "src": "411:1:1"
                   }
                 ],
-                "id": 475,
+                "id": 323,
                 "name": "Block",
                 "src": "337:83:1"
               }
             ],
-            "id": 476,
+            "id": 324,
             "name": "ModifierDefinition",
             "src": "313:107:1"
           },
@@ -1212,7 +1212,7 @@
               "isConstructor": false,
               "kind": "function",
               "name": "setGovernance",
-              "scope": 504,
+              "scope": 352,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "public"
@@ -1225,7 +1225,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "governance",
-                      "scope": 503,
+                      "scope": 351,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1238,17 +1238,17 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 477,
+                        "id": 325,
                         "name": "ElementaryTypeName",
                         "src": "451:7:1"
                       }
                     ],
-                    "id": 478,
+                    "id": 326,
                     "name": "VariableDeclaration",
                     "src": "451:18:1"
                   }
                 ],
-                "id": 479,
+                "id": 327,
                 "name": "ParameterList",
                 "src": "450:20:1"
               },
@@ -1259,7 +1259,7 @@
                   ]
                 },
                 "children": [],
-                "id": 482,
+                "id": 330,
                 "name": "ParameterList",
                 "src": "493:0:1"
               },
@@ -1271,16 +1271,16 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 476,
+                      "referencedDeclaration": 324,
                       "type": "modifier ()",
                       "value": "onlyGovernance"
                     },
-                    "id": 480,
+                    "id": 328,
                     "name": "Identifier",
                     "src": "478:14:1"
                   }
                 ],
-                "id": 481,
+                "id": 329,
                 "name": "ModifierInvocation",
                 "src": "478:14:1"
               },
@@ -1323,7 +1323,7 @@
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
-                            "id": 483,
+                            "id": 331,
                             "name": "Identifier",
                             "src": "504:7:1"
                           },
@@ -1346,11 +1346,11 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 478,
+                                  "referencedDeclaration": 326,
                                   "type": "address",
                                   "value": "governance"
                                 },
-                                "id": 484,
+                                "id": 332,
                                 "name": "Identifier",
                                 "src": "512:10:1"
                               },
@@ -1388,12 +1388,12 @@
                                         "attributes": {
                                           "name": "address"
                                         },
-                                        "id": 485,
+                                        "id": 333,
                                         "name": "ElementaryTypeName",
                                         "src": "526:7:1"
                                       }
                                     ],
-                                    "id": 486,
+                                    "id": 334,
                                     "name": "ElementaryTypeNameExpression",
                                     "src": "526:7:1"
                                   },
@@ -1408,17 +1408,17 @@
                                       "type": "int_const 0",
                                       "value": "0"
                                     },
-                                    "id": 487,
+                                    "id": 335,
                                     "name": "Literal",
                                     "src": "534:1:1"
                                   }
                                 ],
-                                "id": 488,
+                                "id": 336,
                                 "name": "FunctionCall",
                                 "src": "526:10:1"
                               }
                             ],
-                            "id": 489,
+                            "id": 337,
                             "name": "BinaryOperation",
                             "src": "512:24:1"
                           },
@@ -1433,17 +1433,17 @@
                               "type": "literal_string \"new governance the zero address\"",
                               "value": "new governance the zero address"
                             },
-                            "id": 490,
+                            "id": 338,
                             "name": "Literal",
                             "src": "538:33:1"
                           }
                         ],
-                        "id": 491,
+                        "id": 339,
                         "name": "FunctionCall",
                         "src": "504:68:1"
                       }
                     ],
-                    "id": 492,
+                    "id": 340,
                     "name": "ExpressionStatement",
                     "src": "504:68:1"
                   },
@@ -1479,11 +1479,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 464,
+                              "referencedDeclaration": 312,
                               "type": "function (address,address)",
                               "value": "GovernanceTransferred"
                             },
-                            "id": 493,
+                            "id": 341,
                             "name": "Identifier",
                             "src": "588:21:1"
                           },
@@ -1492,11 +1492,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 449,
+                              "referencedDeclaration": 297,
                               "type": "address",
                               "value": "_governance"
                             },
-                            "id": 494,
+                            "id": 342,
                             "name": "Identifier",
                             "src": "610:11:1"
                           },
@@ -1505,21 +1505,21 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 478,
+                              "referencedDeclaration": 326,
                               "type": "address",
                               "value": "governance"
                             },
-                            "id": 495,
+                            "id": 343,
                             "name": "Identifier",
                             "src": "623:10:1"
                           }
                         ],
-                        "id": 496,
+                        "id": 344,
                         "name": "FunctionCall",
                         "src": "588:46:1"
                       }
                     ],
-                    "id": 497,
+                    "id": 345,
                     "name": "EmitStatement",
                     "src": "583:51:1"
                   },
@@ -1540,11 +1540,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 449,
+                              "referencedDeclaration": 297,
                               "type": "address",
                               "value": "_governance"
                             },
-                            "id": 498,
+                            "id": 346,
                             "name": "Identifier",
                             "src": "645:11:1"
                           },
@@ -1553,41 +1553,41 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 478,
+                              "referencedDeclaration": 326,
                               "type": "address",
                               "value": "governance"
                             },
-                            "id": 499,
+                            "id": 347,
                             "name": "Identifier",
                             "src": "659:10:1"
                           }
                         ],
-                        "id": 500,
+                        "id": 348,
                         "name": "Assignment",
                         "src": "645:24:1"
                       }
                     ],
-                    "id": 501,
+                    "id": 349,
                     "name": "ExpressionStatement",
                     "src": "645:24:1"
                   }
                 ],
-                "id": 502,
+                "id": 350,
                 "name": "Block",
                 "src": "493:184:1"
               }
             ],
-            "id": 503,
+            "id": 351,
             "name": "FunctionDefinition",
             "src": "428:249:1"
           }
         ],
-        "id": 504,
+        "id": 352,
         "name": "ContractDefinition",
         "src": "69:611:1"
       }
     ],
-    "id": 505,
+    "id": 353,
     "name": "SourceUnit",
     "src": "33:649:1"
   },
@@ -1597,7 +1597,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-06-10T13:18:35.058Z",
+  "updatedAt": "2021-06-14T19:18:54.465Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -12,23 +12,12 @@ contract ArtGallery {
 
     address lastaddress;
     string lastUri;
-    address feeAccount = 0x0000000000000000000000000000000000000000;
-    address private _owner;
+    address public feeAccount = address(0x0000000000000000000000);
+    address public _owner = address(0x0000000000000000000000);
 
-    constructor(address _feeAccount) public {
-        feeAccount = _feeAccount;
-        _owner = msg.sender;
-    }
+    // ERC20 cifiTokenContract = ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
+    ERC20 cifiTokenContract = ERC20(0x89F2a5463eF4e4176E57EEf2b2fDD256Bf4bC2bD);
 
-    /*
-     * when you deploy Cifi_Token to Local (Ganache) or to blockchain like binance mainnet take the address of the
-     * deployed Cifi_Token and add it below
-     * the address below is just a dummy one that we need to change once we deploy the Cifi_Token Contract to the
-     * binance mainnet and take the address of the contract and add it below
-     * but for testing purposes just deploy the cifiToken to Ganache and take the address and use it.
-     */
-
-    ERC20 cifiTokenContract = ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
     uint256 FEE = 100;
     uint8 cifiDecimals = cifiTokenContract.decimals();
     uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
@@ -40,6 +29,11 @@ contract ArtGallery {
         address caller,
         address galleryAddress
     );
+
+    constructor() {
+        feeAccount = msg.sender;
+        _owner = msg.sender;
+    }
 
     function createGallery(
         string memory name,

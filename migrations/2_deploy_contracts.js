@@ -6,8 +6,5 @@ module.exports = async function (deployer) {
   console.log(feeAccount);
   // await deployer.deploy(NftRegistry,feeAccount,{gas: 4612388});
   // await deployer.deploy(CifiPowa);
-  await deployer.deploy(ArtGallery, feeAccount, {
-    from: accounts[0],
-    overwrite: true,
-  });
+  await deployer.deploy(ArtGallery);
 };
