@@ -3,8 +3,9 @@ pragma solidity >=0.4.22 <0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./library/Governance.sol";
+import "./interface/IArtFactory.sol";
 
-contract CifiPowa is ERC721, Governance {
+contract CifiPowa is ERC721, Governance, IArtFactory {
     using SafeMath for uint256;
     mapping(uint256 => address) _originalCreaters;
     mapping(uint256 => uint256) _royaltyFees;
@@ -82,11 +83,21 @@ contract CifiPowa is ERC721, Governance {
         return true;
     }
 
-    function getRoyaltyFee(uint256 tokenID) public view returns (uint256) {
+    function getRoyaltyFee(uint256 tokenID)
+        external
+        view
+        override
+        returns (uint256)
+    {
         return _royaltyFees[tokenID];
     }
 
-    function getOriginalCreator(uint256 tokenID) public view returns (address) {
+    function getOriginalCreator(uint256 tokenID)
+        external
+        view
+        override
+        returns (address)
+    {
         return _originalCreaters[tokenID];
     }
 

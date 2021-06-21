@@ -4,7 +4,7 @@ pragma solidity >=0.4.22 <0.8.4;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "./library/Governance.sol";
 
-contract CifiPowa is ERC1155, Governance {
+contract CifiPowa1155 is ERC1155, Governance {
     using SafeMath for uint256;
     string public name;
     string public symbol;

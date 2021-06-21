@@ -2,8 +2,9 @@
 pragma solidity >=0.4.22 <0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "./interface/IArtFactory.sol";
 
-contract ArtFactory is ERC721 {
+contract ArtFactory is ERC721, IArtFactory {
     using SafeMath for uint256;
 
     string public Artname;
@@ -107,11 +108,21 @@ contract ArtFactory is ERC721 {
         return true;
     }
 
-    function getRoyaltyFee(uint256 tokenID) public view returns (uint256) {
+    function getRoyaltyFee(uint256 tokenID)
+        external
+        view
+        override
+        returns (uint256)
+    {
         return royaltyFees[tokenID];
     }
 
-    function getOriginalCreator(uint256 tokenID) public view returns (address) {
+    function getOriginalCreator(uint256 tokenID)
+        external
+        view
+        override
+        returns (address)
+    {
         return originalCreaters[tokenID];
     }
 
