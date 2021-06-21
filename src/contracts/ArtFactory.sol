@@ -11,6 +11,9 @@ contract ArtFactory is ERC721 {
     string public Artdescription;
 
     address public Artcreater;
+
+    mapping(uint256 => address) originalCreaters;
+    uint256 private lastTokenID = 0;
     // Total tokens starts at 0 because each new token must be minted and the
     // _mint() call adds 1 to totalTokens
 
@@ -91,12 +94,18 @@ contract ArtFactory is ERC721 {
      */
     function mint(string memory url) external returns (bool) {
         require(msg.sender == Artcreater);
-        uint256 currentTokenCount = totalSupply().add(1);
+        lastTokenID++;
         // The index of the newest token is at the # totalTokens.
-        _mint(msg.sender, currentTokenCount);
-        _setTokenURI(currentTokenCount, url);
-        emit Mint(url, currentTokenCount);
+        originalCreaters[lastTokenID] = _msgSender();
+        // The index of the newest token is at the # totalTokens.
+        _mint(msg.sender, lastTokenID);
+        _setTokenURI(lastTokenID, url);
+        emit Mint(url, lastTokenID);
         return true;
+    }
+
+    function getOriginalCreator(uint256 tokenID) public view returns (address) {
+        return originalCreaters[tokenID];
     }
 
     /**
