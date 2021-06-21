@@ -15,8 +15,8 @@ contract ArtGallery {
     address public feeAccount = address(0x0000000000000000000000);
     address public _owner = address(0x0000000000000000000000);
 
-    // ERC20 cifiTokenContract = ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
-    ERC20 cifiTokenContract = ERC20(0x89F2a5463eF4e4176E57EEf2b2fDD256Bf4bC2bD);
+    ERC20 cifiTokenContract = ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
+    // ERC20 cifiTokenContract = ERC20(0x89F2a5463eF4e4176E57EEf2b2fDD256Bf4bC2bD);
 
     uint256 FEE = 100;
     uint8 cifiDecimals = cifiTokenContract.decimals();
