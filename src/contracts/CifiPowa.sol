@@ -6,8 +6,9 @@ import "./library/Governance.sol";
 
 contract CifiPowa is ERC721, Governance {
     using SafeMath for uint256;
-    mapping(uint256 => address) originalCreaters;
-    uint256 private lastTokenID = 0;
+    mapping(uint256 => address) _originalCreaters;
+    mapping(uint256 => uint256) _royaltyFees;
+    uint256 private _lastTokenID = 0;
 
     constructor() ERC721("Cifipowa", "POWA") {
         _setBaseURI("https://ipfs.io/ipfs/");
@@ -68,17 +69,25 @@ contract CifiPowa is ERC721, Governance {
     /**
      * this function allows to mint more of your ART
      */
-    function mint(string memory metadata) external returns (bool) {
-        lastTokenID++;
+    function mint(string memory metadata, uint256 royaltyFee)
+        external
+        returns (bool)
+    {
+        _lastTokenID++;
         // The index of the newest token is at the # totalTokens.
-        originalCreaters[lastTokenID] = _msgSender();
-        _mint(msg.sender, lastTokenID);
-        _setTokenURI(lastTokenID, metadata);
+        _originalCreaters[_lastTokenID] = _msgSender();
+        _royaltyFees[_lastTokenID] = royaltyFee;
+        _mint(msg.sender, _lastTokenID);
+        _setTokenURI(_lastTokenID, metadata);
         return true;
     }
 
+    function getRoyaltyFee(uint256 tokenID) public view returns (uint256) {
+        return _royaltyFees[tokenID];
+    }
+
     function getOriginalCreator(uint256 tokenID) public view returns (address) {
-        return originalCreaters[tokenID];
+        return _originalCreaters[tokenID];
     }
 
     /**
