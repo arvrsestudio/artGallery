@@ -12,15 +12,15 @@ contract ArtGallery1155 {
 
     address lastaddress;
     string lastUri;
-    address public feeAccount = address(0x0000000000000000000000);
+    // address public feeAccount = address(0x0000000000000000000000);
     address public _owner = address(0x0000000000000000000000);
 
     // ERC20 cifiTokenContract = ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
-    ERC20 cifiTokenContract = ERC20(0x89F2a5463eF4e4176E57EEf2b2fDD256Bf4bC2bD);
+    // ERC20 cifiTokenContract = ERC20(0x89F2a5463eF4e4176E57EEf2b2fDD256Bf4bC2bD);
 
-    uint256 FEE = 100;
-    uint8 cifiDecimals = cifiTokenContract.decimals();
-    uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
+    // uint256 FEE = 100;
+    // uint8 cifiDecimals = cifiTokenContract.decimals();
+    // uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
 
     event Gallery1155Created(
         string name,
@@ -32,7 +32,7 @@ contract ArtGallery1155 {
     );
 
     constructor() {
-        feeAccount = msg.sender;
+        // feeAccount = msg.sender;
         _owner = msg.sender;
     }
 
@@ -46,9 +46,16 @@ contract ArtGallery1155 {
         require(bytes(name).length != 0, "name can't be empty");
         require(bytes(symbol).length != 0, "symbol can't be empty");
         uniqueSymbol(symbol);
-        cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
+        // cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
         ArtFactory1155 gallery =
-            new ArtFactory1155(name, symbol, description, uri, msg.sender);
+            new ArtFactory1155(
+                name,
+                symbol,
+                description,
+                uri,
+                msg.sender,
+                _owner
+            );
 
         // adding the gallery address to the symbolToGalleryAddress
         symbolToGalleryAddress[symbol] = address(gallery);
@@ -95,20 +102,5 @@ contract ArtGallery1155 {
 
     function getGallery(string memory _symbol) public view returns (address) {
         return symbolToGalleryAddress[_symbol];
-    }
-
-    /**
-     * this function allows you to change the address that is going to receive the fee amount
-     */
-    function ChangeFeeAccount(address newFeeAccount) public returns (bool) {
-        require(msg.sender == _owner);
-        feeAccount = newFeeAccount;
-        return true;
-    }
-
-    function ChangeFeeAmount(uint256 newFeeAmount) public returns (bool) {
-        require(msg.sender == _owner);
-        FEE = newFeeAmount;
-        return true;
     }
 }

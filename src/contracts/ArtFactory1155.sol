@@ -2,6 +2,7 @@
 pragma solidity >=0.4.22 <0.8.4;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract ArtFactory1155 is ERC1155 {
     using SafeMath for uint256;
@@ -13,7 +14,12 @@ contract ArtFactory1155 is ERC1155 {
     address public Artcreater;
     // Total tokens starts at 0 because each new token must be minted and the
     // _mint() call adds 1 to totalTokens
+    ERC20 cifiTokenContract = ERC20(0x89F2a5463eF4e4176E57EEf2b2fDD256Bf4bC2bD);
 
+    address public feeAccount = address(0x0000000000000000000000);
+    uint256 FEE = 100;
+    uint8 cifiDecimals = cifiTokenContract.decimals();
+    uint256 public feeAmount = FEE.mul(10**cifiDecimals).div(100);
     event Mint(string url, uint256 tokenId);
 
     /**
@@ -25,12 +31,14 @@ contract ArtFactory1155 is ERC1155 {
         string memory _symbol,
         string memory _description,
         string memory _uri,
-        address creater
+        address creater,
+        address _feeAccount
     ) ERC1155(_uri) {
         Artname = _name;
         Artsymbol = _symbol;
         Artdescription = _description;
         Artcreater = creater;
+        feeAccount = _feeAccount;
         _setURI(_uri);
     }
 
@@ -66,6 +74,7 @@ contract ArtFactory1155 is ERC1155 {
         uint256 amount
     ) external returns (bool) {
         require(msg.sender == Artcreater);
+        cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
         _mint(account, id, amount, "");
         return true;
     }
@@ -76,6 +85,7 @@ contract ArtFactory1155 is ERC1155 {
         uint256[] memory amounts
     ) external returns (bool) {
         require(msg.sender == Artcreater);
+        cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
         _mintBatch(account, ids, amounts, "");
         return true;
     }
