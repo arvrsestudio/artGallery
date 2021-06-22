@@ -11,7 +11,7 @@ contract ArtFactory1155 is ERC1155 {
     string public Artsymbol;
     string public Artdescription;
 
-    address public Artcreater;
+    address public Artcreator;
     // Total tokens starts at 0 because each new token must be minted and the
     // _mint() call adds 1 to totalTokens
     ERC20 cifiTokenContract = ERC20(0x89F2a5463eF4e4176E57EEf2b2fDD256Bf4bC2bD);
@@ -31,19 +31,19 @@ contract ArtFactory1155 is ERC1155 {
         string memory _symbol,
         string memory _description,
         string memory _uri,
-        address creater,
+        address creator,
         address _feeAccount
     ) ERC1155(_uri) {
         Artname = _name;
         Artsymbol = _symbol;
         Artdescription = _description;
-        Artcreater = creater;
+        Artcreator = creator;
         feeAccount = _feeAccount;
         _setURI(_uri);
     }
 
     function setURIPrefix(string memory baseURI) public {
-        require(msg.sender == Artcreater);
+        require(msg.sender == Artcreator);
         _setURI(baseURI);
     }
 
@@ -73,7 +73,7 @@ contract ArtFactory1155 is ERC1155 {
         uint256 id,
         uint256 amount
     ) external returns (bool) {
-        require(msg.sender == Artcreater);
+        require(msg.sender == Artcreator);
         cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
         _mint(account, id, amount, "");
         return true;
@@ -84,7 +84,7 @@ contract ArtFactory1155 is ERC1155 {
         uint256[] memory ids,
         uint256[] memory amounts
     ) external returns (bool) {
-        require(msg.sender == Artcreater);
+        require(msg.sender == Artcreator);
         cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
         _mintBatch(account, ids, amounts, "");
         return true;

@@ -11,9 +11,9 @@ contract ArtFactory is ERC721, IArtFactory {
     string public Artsymbol;
     string public Artdescription;
 
-    address public Artcreater;
+    address public Artcreator;
 
-    mapping(uint256 => address) originalCreaters;
+    mapping(uint256 => address) originalCreators;
     mapping(uint256 => uint256) royaltyFees;
     uint256 private lastTokenID = 0;
     // Total tokens starts at 0 because each new token must be minted and the
@@ -29,17 +29,17 @@ contract ArtFactory is ERC721, IArtFactory {
         string memory _name,
         string memory _symbol,
         string memory _description,
-        address creater
+        address creator
     ) ERC721(_name, _symbol) {
         Artname = _name;
         Artsymbol = _symbol;
         Artdescription = _description;
-        Artcreater = creater;
+        Artcreator = creator;
         _setBaseURI("https://ipfs.io/ipfs/");
     }
 
     function setURIPrefix(string memory baseURI) public {
-        require(msg.sender == Artcreater);
+        require(msg.sender == Artcreator);
         _setBaseURI(baseURI);
     }
 
@@ -98,9 +98,9 @@ contract ArtFactory is ERC721, IArtFactory {
         external
         returns (bool)
     {
-        require(msg.sender == Artcreater);
+        require(msg.sender == Artcreator);
         lastTokenID++;
-        originalCreaters[lastTokenID] = _msgSender();
+        originalCreators[lastTokenID] = _msgSender();
         royaltyFees[lastTokenID] = royaltyFee;
         _mint(msg.sender, lastTokenID);
         _setTokenURI(lastTokenID, url);
@@ -123,7 +123,7 @@ contract ArtFactory is ERC721, IArtFactory {
         override
         returns (address)
     {
-        return originalCreaters[tokenID];
+        return originalCreators[tokenID];
     }
 
     /**
