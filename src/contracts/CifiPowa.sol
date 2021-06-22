@@ -7,7 +7,7 @@ import "./interface/IArtFactory.sol";
 
 contract CifiPowa is ERC721, Governance, IArtFactory {
     using SafeMath for uint256;
-    mapping(uint256 => address) _originalCreaters;
+    mapping(uint256 => address) _originalCreators;
     mapping(uint256 => uint256) _royaltyFees;
     uint256 private _lastTokenID = 0;
 
@@ -76,7 +76,7 @@ contract CifiPowa is ERC721, Governance, IArtFactory {
     {
         _lastTokenID++;
         // The index of the newest token is at the # totalTokens.
-        _originalCreaters[_lastTokenID] = _msgSender();
+        _originalCreators[_lastTokenID] = _msgSender();
         _royaltyFees[_lastTokenID] = royaltyFee;
         _mint(msg.sender, _lastTokenID);
         _setTokenURI(_lastTokenID, metadata);
@@ -98,7 +98,7 @@ contract CifiPowa is ERC721, Governance, IArtFactory {
         override
         returns (address)
     {
-        return _originalCreaters[tokenID];
+        return _originalCreators[tokenID];
     }
 
     /**
