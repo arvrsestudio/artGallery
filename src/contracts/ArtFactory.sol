@@ -2,9 +2,9 @@
 pragma solidity >=0.4.22 <0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "./interface/IArtFactory.sol";
+import "./interface/RoyaltyFactory.sol";
 
-contract ArtFactory is ERC721, IArtFactory {
+contract ArtFactory is ERC721, RoyaltyFactory {
     using SafeMath for uint256;
 
     string public Artname;
@@ -13,8 +13,6 @@ contract ArtFactory is ERC721, IArtFactory {
 
     address public Artcreator;
 
-    mapping(uint256 => address) originalCreators;
-    mapping(uint256 => uint256) royaltyFees;
     uint256 private lastTokenID = 0;
     // Total tokens starts at 0 because each new token must be minted and the
     // _mint() call adds 1 to totalTokens
@@ -100,30 +98,12 @@ contract ArtFactory is ERC721, IArtFactory {
     {
         require(msg.sender == Artcreator);
         lastTokenID++;
-        originalCreators[lastTokenID] = _msgSender();
-        royaltyFees[lastTokenID] = royaltyFee;
+        setOriginalCreator(lastTokenID, _msgSender());
+        setRoyaltyFee(lastTokenID, royaltyFee);
         _mint(msg.sender, lastTokenID);
         _setTokenURI(lastTokenID, url);
         emit Mint(url, lastTokenID);
         return true;
-    }
-
-    function getRoyaltyFee(uint256 tokenID)
-        external
-        view
-        override
-        returns (uint256)
-    {
-        return royaltyFees[tokenID];
-    }
-
-    function getOriginalCreator(uint256 tokenID)
-        external
-        view
-        override
-        returns (address)
-    {
-        return originalCreators[tokenID];
     }
 
     /**

@@ -2,13 +2,13 @@
 pragma solidity >=0.4.22 <0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "./library/Governance.sol";
-import "./interface/IArtFactory.sol";
 
-contract CifiPowa is ERC721, Governance, IArtFactory {
+import "./library/Governance.sol";
+import "./interface/RoyaltyFactory.sol";
+
+contract CifiPowa is ERC721, Governance, RoyaltyFactory {
     using SafeMath for uint256;
-    mapping(uint256 => address) _originalCreators;
-    mapping(uint256 => uint256) _royaltyFees;
+
     uint256 private _lastTokenID = 0;
 
     constructor() ERC721("Cifipowa", "POWA") {
@@ -76,29 +76,11 @@ contract CifiPowa is ERC721, Governance, IArtFactory {
     {
         _lastTokenID++;
         // The index of the newest token is at the # totalTokens.
-        _originalCreators[_lastTokenID] = _msgSender();
-        _royaltyFees[_lastTokenID] = royaltyFee;
+        setOriginalCreator(_lastTokenID, _msgSender());
+        setRoyaltyFee(_lastTokenID, royaltyFee);
         _mint(msg.sender, _lastTokenID);
         _setTokenURI(_lastTokenID, metadata);
         return true;
-    }
-
-    function getRoyaltyFee(uint256 tokenID)
-        external
-        view
-        override
-        returns (uint256)
-    {
-        return _royaltyFees[tokenID];
-    }
-
-    function getOriginalCreator(uint256 tokenID)
-        external
-        view
-        override
-        returns (address)
-    {
-        return _originalCreators[tokenID];
     }
 
     /**
