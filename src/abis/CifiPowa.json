@@ -637,52 +637,52 @@
     "absolutePath": "/F/MyWork/LianHe/Citizen/ArtGallery/src/contracts/CifiPowa.sol",
     "exportedSymbols": {
       "Address": [
-        6343
+        6397
       ],
       "CifiPowa": [
         1365
       ],
       "Context": [
-        6366
+        6420
       ],
       "ERC165": [
-        2777
+        2831
       ],
       "ERC721": [
-        5855
+        5909
       ],
       "EnumerableMap": [
-        6926
+        6980
       ],
       "EnumerableSet": [
-        7418
+        7472
       ],
       "Governance": [
-        2610
+        2664
       ],
       "IERC165": [
-        2789
+        2843
       ],
       "IERC721": [
-        5971
+        6025
       ],
       "IERC721Enumerable": [
-        6002
+        6056
       ],
       "IERC721Metadata": [
-        6029
+        6083
       ],
       "IERC721Receiver": [
-        6047
+        6101
       ],
       "RoyaltyFactory": [
-        2551
+        2605
       ],
       "SafeMath": [
-        3144
+        3198
       ],
       "Strings": [
-        7505
+        7559
       ]
     },
     "id": 1366,
@@ -709,7 +709,7 @@
         "id": 1117,
         "nodeType": "ImportDirective",
         "scope": 1366,
-        "sourceUnit": 5856,
+        "sourceUnit": 5910,
         "src": "69:57:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -720,7 +720,7 @@
         "id": 1118,
         "nodeType": "ImportDirective",
         "scope": 1366,
-        "sourceUnit": 2611,
+        "sourceUnit": 2665,
         "src": "130:34:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -731,7 +731,7 @@
         "id": 1119,
         "nodeType": "ImportDirective",
         "scope": 1366,
-        "sourceUnit": 2552,
+        "sourceUnit": 2606,
         "src": "166:40:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -744,10 +744,10 @@
               "id": 1120,
               "name": "ERC721",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5855,
+              "referencedDeclaration": 5909,
               "src": "231:6:4",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_ERC721_$5855",
+                "typeIdentifier": "t_contract$_ERC721_$5909",
                 "typeString": "contract ERC721"
               }
             },
@@ -760,10 +760,10 @@
               "id": 1122,
               "name": "Governance",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 2610,
+              "referencedDeclaration": 2664,
               "src": "239:10:4",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Governance_$2610",
+                "typeIdentifier": "t_contract$_Governance_$2664",
                 "typeString": "contract Governance"
               }
             },
@@ -776,10 +776,10 @@
               "id": 1124,
               "name": "RoyaltyFactory",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 2551,
+              "referencedDeclaration": 2605,
               "src": "251:14:4",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_RoyaltyFactory_$2551",
+                "typeIdentifier": "t_contract$_RoyaltyFactory_$2605",
                 "typeString": "contract RoyaltyFactory"
               }
             },
@@ -789,30 +789,30 @@
           }
         ],
         "contractDependencies": [
-          2551,
-          2610,
-          2777,
-          2789,
-          5855,
-          5971,
-          6002,
-          6029,
-          6366
+          2605,
+          2664,
+          2831,
+          2843,
+          5909,
+          6025,
+          6056,
+          6083,
+          6420
         ],
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 1365,
         "linearizedBaseContracts": [
           1365,
-          2551,
-          2610,
-          5855,
-          6002,
-          6029,
-          5971,
-          2777,
-          2789,
-          6366
+          2605,
+          2664,
+          5909,
+          6056,
+          6083,
+          6025,
+          2831,
+          2843,
+          6420
         ],
         "name": "CifiPowa",
         "nodeType": "ContractDefinition",
@@ -823,10 +823,10 @@
               "id": 1126,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3144,
+              "referencedDeclaration": 3198,
               "src": "279:8:4",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$3144",
+                "typeIdentifier": "t_contract$_SafeMath_$3198",
                 "typeString": "library SafeMath"
               }
             },
@@ -922,7 +922,7 @@
                       "name": "_setBaseURI",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5761,
+                      "referencedDeclaration": 5815,
                       "src": "401:11:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$returns$__$",
@@ -995,10 +995,10 @@
                   "name": "ERC721",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 5855,
+                  "referencedDeclaration": 5909,
                   "src": "363:6:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_ERC721_$5855_$",
+                    "typeIdentifier": "t_type$_t_contract$_ERC721_$5909_$",
                     "typeString": "type(contract ERC721)"
                   }
                 },
@@ -1059,7 +1059,7 @@
                       "name": "_setBaseURI",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5761,
+                      "referencedDeclaration": 5815,
                       "src": "531:11:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$returns$__$",
@@ -1099,7 +1099,7 @@
                   "name": "onlyGovernance",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2582,
+                  "referencedDeclaration": 2636,
                   "src": "505:14:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1184,7 +1184,7 @@
                             "name": "_msgSender",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 6354,
+                            "referencedDeclaration": 6408,
                             "src": "765:10:4",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$__$returns$_t_address_payable_$",
@@ -1234,7 +1234,7 @@
                             "name": "ownerOf",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 5059,
+                            "referencedDeclaration": 5113,
                             "src": "781:7:4",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_view$_t_uint256_$returns$_t_address_$",
@@ -1366,7 +1366,7 @@
                       "name": "_setTokenURI",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5750,
+                      "referencedDeclaration": 5804,
                       "src": "827:12:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_string_memory_ptr_$returns$__$",
@@ -1697,7 +1697,7 @@
                       "name": "balanceOf",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5043,
+                      "referencedDeclaration": 5097,
                       "src": "1180:9:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_uint256_$",
@@ -1929,7 +1929,7 @@
                               "name": "tokenOfOwnerByIndex",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 5175,
+                              "referencedDeclaration": 5229,
                               "src": "1329:19:4",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_internal_view$_t_address_$_t_uint256_$returns$_t_uint256_$",
@@ -2288,7 +2288,7 @@
                             "name": "approve",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 5250,
+                            "referencedDeclaration": 5304,
                             "src": "1940:7:4",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$returns$__$",
@@ -2743,7 +2743,7 @@
                             "name": "approve",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 5250,
+                            "referencedDeclaration": 5304,
                             "src": "2263:7:4",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$returns$__$",
@@ -3037,7 +3037,7 @@
                           "name": "_msgSender",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 6354,
+                          "referencedDeclaration": 6408,
                           "src": "2626:10:4",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$__$returns$_t_address_payable_$",
@@ -3075,7 +3075,7 @@
                       "name": "setOriginalCreator",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2526,
+                      "referencedDeclaration": 2580,
                       "src": "2593:18:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_address_$returns$__$",
@@ -3144,7 +3144,7 @@
                       "name": "setRoyaltyFee",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2512,
+                      "referencedDeclaration": 2566,
                       "src": "2650:13:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_uint256_$returns$__$",
@@ -3227,7 +3227,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5587,
+                      "referencedDeclaration": 5641,
                       "src": "2700:5:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$returns$__$",
@@ -3296,7 +3296,7 @@
                       "name": "_setTokenURI",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5750,
+                      "referencedDeclaration": 5804,
                       "src": "2742:12:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_string_memory_ptr_$returns$__$",
@@ -3476,7 +3476,7 @@
                               "name": "_msgSender",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 6354,
+                              "referencedDeclaration": 6408,
                               "src": "2969:10:4",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_internal_view$__$returns$_t_address_payable_$",
@@ -3526,7 +3526,7 @@
                           "name": "_isApprovedOrOwner",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5484,
+                          "referencedDeclaration": 5538,
                           "src": "2950:18:4",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$_t_address_$_t_uint256_$returns$_t_bool_$",
@@ -3636,7 +3636,7 @@
                       "name": "_burn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5656,
+                      "referencedDeclaration": 5710,
                       "src": "3058:5:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
@@ -3734,52 +3734,52 @@
       "absolutePath": "/F/MyWork/LianHe/Citizen/ArtGallery/src/contracts/CifiPowa.sol",
       "exportedSymbols": {
         "Address": [
-          6343
+          6397
         ],
         "CifiPowa": [
           1365
         ],
         "Context": [
-          6366
+          6420
         ],
         "ERC165": [
-          2777
+          2831
         ],
         "ERC721": [
-          5855
+          5909
         ],
         "EnumerableMap": [
-          6926
+          6980
         ],
         "EnumerableSet": [
-          7418
+          7472
         ],
         "Governance": [
-          2610
+          2664
         ],
         "IERC165": [
-          2789
+          2843
         ],
         "IERC721": [
-          5971
+          6025
         ],
         "IERC721Enumerable": [
-          6002
+          6056
         ],
         "IERC721Metadata": [
-          6029
+          6083
         ],
         "IERC721Receiver": [
-          6047
+          6101
         ],
         "RoyaltyFactory": [
-          2551
+          2605
         ],
         "SafeMath": [
-          3144
+          3198
         ],
         "Strings": [
-          7505
+          7559
         ]
       },
       "license": "MIT"
@@ -3803,7 +3803,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 5856,
+          "SourceUnit": 5910,
           "absolutePath": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
           "file": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
           "scope": 1366,
@@ -3818,7 +3818,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 2611,
+          "SourceUnit": 2665,
           "absolutePath": "/F/MyWork/LianHe/Citizen/ArtGallery/src/contracts/library/Governance.sol",
           "file": "./library/Governance.sol",
           "scope": 1366,
@@ -3833,7 +3833,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 2552,
+          "SourceUnit": 2606,
           "absolutePath": "/F/MyWork/LianHe/Citizen/ArtGallery/src/contracts/interface/RoyaltyFactory.sol",
           "file": "./interface/RoyaltyFactory.sol",
           "scope": 1366,
@@ -3850,29 +3850,29 @@
         "attributes": {
           "abstract": false,
           "contractDependencies": [
-            2551,
-            2610,
-            2777,
-            2789,
-            5855,
-            5971,
-            6002,
-            6029,
-            6366
+            2605,
+            2664,
+            2831,
+            2843,
+            5909,
+            6025,
+            6056,
+            6083,
+            6420
           ],
           "contractKind": "contract",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             1365,
-            2551,
-            2610,
-            5855,
-            6002,
-            6029,
-            5971,
-            2777,
-            2789,
-            6366
+            2605,
+            2664,
+            5909,
+            6056,
+            6083,
+            6025,
+            2831,
+            2843,
+            6420
           ],
           "name": "CifiPowa",
           "scope": 1366
@@ -3884,7 +3884,7 @@
               {
                 "attributes": {
                   "name": "ERC721",
-                  "referencedDeclaration": 5855,
+                  "referencedDeclaration": 5909,
                   "type": "contract ERC721"
                 },
                 "id": 1120,
@@ -3902,7 +3902,7 @@
               {
                 "attributes": {
                   "name": "Governance",
-                  "referencedDeclaration": 2610,
+                  "referencedDeclaration": 2664,
                   "type": "contract Governance"
                 },
                 "id": 1122,
@@ -3920,7 +3920,7 @@
               {
                 "attributes": {
                   "name": "RoyaltyFactory",
-                  "referencedDeclaration": 2551,
+                  "referencedDeclaration": 2605,
                   "type": "contract RoyaltyFactory"
                 },
                 "id": 1124,
@@ -3937,7 +3937,7 @@
               {
                 "attributes": {
                   "name": "SafeMath",
-                  "referencedDeclaration": 3144,
+                  "referencedDeclaration": 3198,
                   "type": "library SafeMath"
                 },
                 "id": 1126,
@@ -4040,7 +4040,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 5855,
+                      "referencedDeclaration": 5909,
                       "type": "type(contract ERC721)",
                       "value": "ERC721"
                     },
@@ -4113,7 +4113,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 5761,
+                              "referencedDeclaration": 5815,
                               "type": "function (string memory)",
                               "value": "_setBaseURI"
                             },
@@ -4221,7 +4221,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 2582,
+                      "referencedDeclaration": 2636,
                       "type": "modifier ()",
                       "value": "onlyGovernance"
                     },
@@ -4264,7 +4264,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 5761,
+                              "referencedDeclaration": 5815,
                               "type": "function (string memory)",
                               "value": "_setBaseURI"
                             },
@@ -4482,7 +4482,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 6354,
+                                      "referencedDeclaration": 6408,
                                       "type": "function () view returns (address payable)",
                                       "value": "_msgSender"
                                     },
@@ -4521,7 +4521,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 5059,
+                                      "referencedDeclaration": 5113,
                                       "type": "function (uint256) view returns (address)",
                                       "value": "ownerOf"
                                     },
@@ -4609,7 +4609,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 5750,
+                              "referencedDeclaration": 5804,
                               "type": "function (uint256,string memory)",
                               "value": "_setTokenURI"
                             },
@@ -4986,7 +4986,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 5043,
+                              "referencedDeclaration": 5097,
                               "type": "function (address) view returns (uint256)",
                               "value": "balanceOf"
                             },
@@ -5357,7 +5357,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 5175,
+                                          "referencedDeclaration": 5229,
                                           "type": "function (address,uint256) view returns (uint256)",
                                           "value": "tokenOfOwnerByIndex"
                                         },
@@ -5741,7 +5741,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 5250,
+                                      "referencedDeclaration": 5304,
                                       "type": "function (address,uint256)",
                                       "value": "approve"
                                     },
@@ -6203,7 +6203,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 5250,
+                                      "referencedDeclaration": 5304,
                                       "type": "function (address,uint256)",
                                       "value": "approve"
                                     },
@@ -6480,7 +6480,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2526,
+                              "referencedDeclaration": 2580,
                               "type": "function (uint256,address)",
                               "value": "setOriginalCreator"
                             },
@@ -6527,7 +6527,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 6354,
+                                  "referencedDeclaration": 6408,
                                   "type": "function () view returns (address payable)",
                                   "value": "_msgSender"
                                 },
@@ -6582,7 +6582,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 2512,
+                              "referencedDeclaration": 2566,
                               "type": "function (uint256,uint256)",
                               "value": "setRoyaltyFee"
                             },
@@ -6658,7 +6658,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 5587,
+                              "referencedDeclaration": 5641,
                               "type": "function (address,uint256)",
                               "value": "_mint"
                             },
@@ -6749,7 +6749,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 5750,
+                              "referencedDeclaration": 5804,
                               "type": "function (uint256,string memory)",
                               "value": "_setTokenURI"
                             },
@@ -6969,7 +6969,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 5484,
+                                  "referencedDeclaration": 5538,
                                   "type": "function (address,uint256) view returns (bool)",
                                   "value": "_isApprovedOrOwner"
                                 },
@@ -7003,7 +7003,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 6354,
+                                      "referencedDeclaration": 6408,
                                       "type": "function () view returns (address payable)",
                                       "value": "_msgSender"
                                     },
@@ -7087,7 +7087,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 5656,
+                              "referencedDeclaration": 5710,
                               "type": "function (uint256)",
                               "value": "_burn"
                             },
@@ -7143,15 +7143,15 @@
     "version": "0.7.4+commit.3f05b770.Emscripten.clang"
   },
   "networks": {
-    "97": {
+    "56": {
       "events": {},
       "links": {},
-      "address": "0x78206C734fE6454BFDe77EECFC0ff4F3EB076740",
-      "transactionHash": "0x9a7ef87ae239a18fc0e9bf97bbb953b409c7cf5bded3400afa1e139c242f6a77"
+      "address": "0x8CD4633af663b385754eb5929F6d3a909485261a",
+      "transactionHash": "0x4f980d5623b9d12d7fc06c632565fa1b0ca01a90d3300e8320327e63fc870837"
     }
   },
-  "schemaVersion": "3.3.4",
-  "updatedAt": "2021-06-23T01:37:39.781Z",
+  "schemaVersion": "3.4.1",
+  "updatedAt": "2021-06-26T13:25:12.162Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

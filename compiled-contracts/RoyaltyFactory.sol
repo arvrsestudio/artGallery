@@ -78,7 +78,7 @@ abstract contract ERC165 is IERC165 {
 
 
 
-contract IArtFactory is ERC165 {
+contract RoyaltyFactory is ERC165 {
     mapping(uint256 => address) _originalCreators;
     mapping(uint256 => uint256) _royaltyFees; // 100% = 1000000, 1% = 10000
     /*
@@ -89,10 +89,10 @@ contract IArtFactory is ERC165 {
      *
      *     => 0x4e30ff2d ^ 0x1db8209f ^ 0x9e4c0141 ^ 0xcaa47fbf == 0x0760a14c
      */
-    bytes4 private constant _INTERFACE_ID_ARTFACTORY = 0x0760a14c;
+    bytes4 private constant _INTERFACE_ID_ROYALTY = 0x0760a14c;
 
     constructor() {
-        _registerInterface(_INTERFACE_ID_ARTFACTORY);
+        _registerInterface(_INTERFACE_ID_ROYALTY);
     }
 
     function setRoyaltyFee(uint256 tokenID, uint256 fee) internal {
