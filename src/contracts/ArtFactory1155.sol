@@ -3,8 +3,9 @@ pragma solidity >=0.4.22 <0.8.4;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "./interface/RoyaltyFactory.sol";
 
-contract ArtFactory1155 is ERC1155 {
+contract ArtFactory1155 is ERC1155, RoyaltyFactory {
     using SafeMath for uint256;
 
     string public Artname;
@@ -12,6 +13,8 @@ contract ArtFactory1155 is ERC1155 {
     string public Artdescription;
 
     address public Artcreator;
+
+    uint256 private _lastTokenID = 0;
     // Total tokens starts at 0 because each new token must be minted and the
     // _mint() call adds 1 to totalTokens
     ERC20 cifiTokenContract = ERC20(0xe56aB536c90E5A8f06524EA639bE9cB3589B8146);
@@ -69,25 +72,14 @@ contract ArtFactory1155 is ERC1155 {
     /**
      * this function allows to mint more of your Art
      */
-    function mint(
-        address account,
-        uint256 id,
-        uint256 amount
-    ) external returns (bool) {
+    function mint(uint256 amount, uint256 royaltyFee) external returns (bool) {
         require(msg.sender == Artcreator);
+        _lastTokenID++;
+        require(amount != 0, "Amount should be positive");
+        setOriginalCreator(_lastTokenID, _msgSender());
+        setRoyaltyFee(_lastTokenID, royaltyFee);
         cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
-        _mint(account, id, amount, "");
-        return true;
-    }
-
-    function mintBatch(
-        address account,
-        uint256[] memory ids,
-        uint256[] memory amounts
-    ) external returns (bool) {
-        require(msg.sender == Artcreator);
-        cifiTokenContract.transferFrom(msg.sender, feeAccount, feeAmount);
-        _mintBatch(account, ids, amounts, "");
+        _mint(_msgSender(), _lastTokenID, amount, "");
         return true;
     }
 
@@ -104,19 +96,6 @@ contract ArtFactory1155 is ERC1155 {
             "ArtFactory: Invalid operator"
         );
         _burn(account, id, amount);
-        return true;
-    }
-
-    function burnBatch(
-        address account,
-        uint256[] memory ids,
-        uint256[] memory amounts
-    ) public returns (bool) {
-        require(
-            isApprovedForAll(account, _msgSender()),
-            "ArtFactory: Invalid operator"
-        );
-        _burnBatch(account, ids, amounts);
         return true;
     }
 }
